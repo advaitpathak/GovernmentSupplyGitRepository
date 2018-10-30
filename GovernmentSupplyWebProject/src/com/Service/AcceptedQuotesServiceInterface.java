@@ -13,4 +13,5 @@ public interface AcceptedQuotesServiceInterface
 	
 	public List<AcceptedQuotes> getAllAcceptedQuotes();
 	void addAcceptedQuote(AcceptedQuotes acceptedQuote)throws QuoteExistException;
+	void addAcceptedQuote( int orderId, int vendorId, int quantity, int totalCost );
 }

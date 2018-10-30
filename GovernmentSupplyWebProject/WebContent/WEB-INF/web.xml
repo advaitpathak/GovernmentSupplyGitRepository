@@ -9,20 +9,16 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-
-
-<servlet>
-  <servlet-name>Jersey Rest Container</servlet-name>
-  <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-  <init-param>
-  <param-name>jersey.config.server.provider.packages</param-name>
-  <param-value>com.ws.rest</param-value>
-  </init-param>
+  <servlet>
+    <servlet-name>Jersey Rest Container</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <param-name>jersey.config.server.provider.packages</param-name>
+      <param-value>com.ws.rest</param-value>
+    </init-param>
   </servlet>
- 
-  
- <servlet-mapping>
- <servlet-name>Jersey Rest Container </servlet-name>
- <url-pattern>/rest/*</url-pattern>
- </servlet-mapping> 
+  <servlet-mapping>
+    <servlet-name>Jersey Rest Container</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
 </web-app>

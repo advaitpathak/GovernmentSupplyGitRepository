@@ -21,4 +21,6 @@ public interface QuotationServiceInterface {
 	boolean checkEstimateDate(String estimatedDeliveryDate,String deadline);
 	List<Quotation> lowestQuotedCostFisrt(List<Quotation> allQuotationList);
 	List<Quotation> earliestDelivery(List<Quotation> allQuotationList);
+	List<Quotation> getQuotationOfVendor(int vendorId);
+	
 }

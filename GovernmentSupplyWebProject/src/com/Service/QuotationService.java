@@ -2,6 +2,7 @@ package com.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import com.al.dao.QuotationExistException;
 import com.al.dao.VendorDao;
 import com.al.dao.VendorDaoImpl;
 import com.al.model.Quotation;
+import com.al.model.Vendor;
 
 class QuotationCompareOnQuotedCost implements Comparator<Quotation>
 {
@@ -26,7 +28,6 @@ class QuotationCompareOnQuotedCost implements Comparator<Quotation>
 
 class QuotationCompareOnEarliestDelivery implements Comparator<Quotation>
 {
-
 	@Override
 	public int compare(Quotation quote1, Quotation quote2) 
 	{
@@ -127,5 +128,19 @@ public class QuotationService implements QuotationServiceInterface {
 		// TODO Auto-generated method stub
 		allQuotationList.sort(new QuotationCompareOnEarliestDelivery());
 		return allQuotationList;
+	}
+
+	@Override
+	public List<Quotation> getQuotationOfVendor(int vendorId) {
+		List<Quotation> vendorQuotationList = new ArrayList<>();
+		List<Quotation> allQuotationList = quotationDao.getAllQuotation();
+		for(Quotation q : allQuotationList)
+		{
+			if(q.getVendor().getVendorId()==vendorId)
+			{
+				vendorQuotationList.add(q);
+			}
+		}
+		return vendorQuotationList;
 	}
 }	

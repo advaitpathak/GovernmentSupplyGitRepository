@@ -29,4 +29,7 @@ List<Order> orderObjList = (List<Order>) object;%>
 </table>
 <form method='post' action='LoginPage.jsp'><br><input type='submit' value='Back'/>
 </form>
+<form method='post' action='GetVendorQuotes'><br><input type='submit' value='Get Quotes'/>
+</form>
+
 </body></html>
