@@ -215,7 +215,7 @@ public class QuotationRules {
 		
 			
 				List<Quotation> earliestDelivery = quotationService.earliestDelivery(quotationList);
-				String estimateDeliveryDate = quotationWithSameVendorRating.get(0).getEstimateDeliveryDate();
+				String estimateDeliveryDate = earliestDelivery.get(0).getEstimateDeliveryDate();
 				for(Quotation q:earliestDelivery)
 				{
 					if(estimateDeliveryDate==q.getEstimateDeliveryDate())

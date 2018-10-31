@@ -105,7 +105,7 @@ public class QuotationService implements QuotationServiceInterface {
 		
 	    long diffInMillies = Math.abs(deadlineDate.getTime() - estimatedDeliveryDateParse.getTime());
 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-	    if(diff>=0)
+	    if(diff<=0)
 	    {
 	    	return true;
 	    }

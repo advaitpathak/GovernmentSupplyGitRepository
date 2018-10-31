@@ -2,6 +2,7 @@ package com.Servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,21 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.Service.OrderService;
 import com.Service.ProductService;
+import com.al.model.Order;
 import com.al.model.Product;
 
 
 /**
  * Servlet implementation class ListAllProducts
  */
-@WebServlet("/ListAllProducts")
-public class ListAllProducts extends HttpServlet {
+@WebServlet("/ClientPageDetails")
+public class ClientPageDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListAllProducts() {
+    public ClientPageDetails () {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,10 +52,25 @@ public class ListAllProducts extends HttpServlet {
 			
 		
 		request.setAttribute("AllProductList", allProductList);
-		RequestDispatcher requestDispatcher=request.getRequestDispatcher("GovernmentEmployeePortal.jsp");
-		requestDispatcher.include(request, response);
+			
+			List<Order> clientOrderList = new ArrayList<>();
+			OrderService orderService = new OrderService();
+			List<Order> allOrdersList = orderService.getAllOrders();
+			Object clientIdObj = session.getAttribute("clientId");
+			Integer clientId = Integer.parseInt(clientIdObj.toString());
+			for(Order order : allOrdersList)
+			{
+				if(order.getClient().getClientId()==clientId)
+				{
+					clientOrderList.add(order);
+				}
+			}
 		
+			session.setAttribute("clientOrderList", clientOrderList);
 		
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("GovernmentEmployeePortal.jsp");
+			requestDispatcher.include(request, response);
+			
 		}
 	}
 

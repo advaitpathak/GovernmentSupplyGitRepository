@@ -27,18 +27,31 @@ public class AcceptedQuotesService implements AcceptedQuotesServiceInterface {
 	@Override
 	public void addAcceptedQuote( int orderId, int vendorId, int quantity, int totalCost) {
 		AcceptedQuotes acceptedQuotes = new AcceptedQuotes();
+		List<AcceptedQuotes> allAcceptedQuotes = acceptedQuotesDao.getAllAcceptedQuotes();
+		if(allAcceptedQuotes.size()==0)
+		{
+			acceptedQuotes.setAcceptedQuoteId(401);
+		}
+		else
+		{
+			AcceptedQuotes acceptedQuotes2 = allAcceptedQuotes.get(allAcceptedQuotes.size()-1);
+			int acceptedQuoteId = acceptedQuotes2.getAcceptedQuoteId();
+			acceptedQuotes.setAcceptedQuoteId(acceptedQuoteId+1);
+		}
 		//acceptedQuotes.setAcceptedQuoteId(acceptedQuoteId);
 		acceptedQuotes.setOrder(new OrderDaoImpl().getOrder(orderId));
 		acceptedQuotes.setVendor(new VendorDaoImpl().getVendor(vendorId));
 		acceptedQuotes.setQuantity(quantity);
 		acceptedQuotes.setTotalCost(totalCost);
 		
-		try {
-			acceptedQuotesDao.addAcceptedQuote(acceptedQuotes);
-		} catch (QuoteExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+			try {
+				acceptedQuotesDao.addAcceptedQuote(acceptedQuotes);
+			} catch (QuoteExistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 	}
 
 	

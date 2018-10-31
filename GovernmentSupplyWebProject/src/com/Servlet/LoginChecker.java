@@ -70,6 +70,8 @@ public class LoginChecker extends HttpServlet {
 				
 				ClientService clientService=new ClientService();
 				Client client = clientService.getClient(loginIdInt);
+				if(client != null)
+				{
 				String password=client.getClientPassword();
 				 logger.trace("client password:"+password);
 				 if(password.equals(pwd))
@@ -80,16 +82,16 @@ public class LoginChecker extends HttpServlet {
 				  session.setAttribute("userType", "Government employee");
 		    	  session.setAttribute("client", client);
 		    	  session.setAttribute("clientId", loginIdInt);
-		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("ListAllProducts");
+		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("ClientPageDetails");
 		    	  requestDispatcher.forward(request, response);
 				 }
-			
+				}
 					 
 				 else  //send it to loginPage.jsp
 			      { 
 			    	  
 			    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
-			    	  response.getWriter().append("Wrong user id OR password");
+			    	  response.getWriter().append("Wrong user id OR password Or User Type");
 			    	  requestDispatcher.include(request, response);
 			      }
 			 }
@@ -102,6 +104,8 @@ public class LoginChecker extends HttpServlet {
 				 
 				 VendorService vendorService=new VendorService();
 				 Vendor vendor = vendorService.getVendor(loginIdInt);
+				 if(vendor !=null)
+				 {
 				 String password=vendor.getVendorPassword();
 				 logger.trace("system passsword "+password);
 				 if(password.equals(pwd))
@@ -113,6 +117,7 @@ public class LoginChecker extends HttpServlet {
 		    	  session.setAttribute("vendorId", loginId);
 		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("FetchPlacedOrders");
 		    	  requestDispatcher.forward(request, response);
+				 }
 				 }
 			
 		      else  //send it to loginPage.html
@@ -132,7 +137,7 @@ public class LoginChecker extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 				
 		doGet(request, response);

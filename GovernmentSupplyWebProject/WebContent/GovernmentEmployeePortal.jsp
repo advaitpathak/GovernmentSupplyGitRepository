@@ -1,3 +1,4 @@
+<%@page import="com.al.model.Order"%>
 <%@page import="java.util.List"%>
 <%@page import="com.al.model.Product"%>
 
@@ -22,7 +23,7 @@ List <Product> allProductList=(List <Product>)listobj;
 <h1> Welcome Government Employee... </h1>
 
 
-<form method="get" action="SelectedProducts">
+<form method="post" action="SelectedProducts">
     <table border="2">
 
 <tr>
@@ -50,14 +51,18 @@ for(Product product:allProductList)
         <% } %>
     </table>
     <input type="submit" value="Give orders"/>
-</form>   
-
-
-
-</center>>
-
-
-
-
+</form>
+<%	Object object = session.getAttribute("clientOrderList");
+	List<Order> clientOrderList = (List<Order>) object;%>
+<form method="post" action="AcceptedQuotations">   
+View Accepted Quotations <select name="OrderId">
+  <% for(Order order : clientOrderList) {%>
+  <option value= "<%=order.getOrderId()%>"><%=order.getOrderId()%></option>
+<% }%>
+</select>
+<br><br>
+<input type = "submit" value ="Check"/>
+</form>
+</center>
 </body>
 </html>

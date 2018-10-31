@@ -1,6 +1,7 @@
 package com.Servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,20 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.Service.AcceptedQuotesService;
 import com.Service.QuotationService;
+import com.al.model.AcceptedQuotes;
 import com.al.model.Quotation;
 
 /**
- * Servlet implementation class GetVendorQuotes
+ * Servlet implementation class GetSelectedQoutesOfVendor
  */
-@WebServlet("/GetVendorQuotes")
-public class GetVendorQuotes extends HttpServlet {
+@WebServlet("/GetSelectedQoutesOfVendor")
+public class GetSelectedQoutesOfVendor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetVendorQuotes() {
+    public GetSelectedQoutesOfVendor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,24 +38,26 @@ public class GetVendorQuotes extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		if(request.getSession(false)==null)
-		{	
-			request.getSession().invalidate();
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LoginPage.jsp");
-			requestDispatcher.include(request, response);
-		}
-		else
+		HttpSession session = request.getSession();
+		Object vendorIdObj = session.getAttribute("vendorId");
+		Integer vendorId = Integer.parseInt(vendorIdObj.toString());
+		AcceptedQuotesService acceptedQuotesService = new AcceptedQuotesService();
+		List<AcceptedQuotes> allAcceptedQuotes = acceptedQuotesService.getAllAcceptedQuotes();
+		List<AcceptedQuotes> listOfQuotesWithMatchingVendor = new ArrayList<AcceptedQuotes>();
+		for(AcceptedQuotes acceptedQuotes:allAcceptedQuotes)
 		{
-			HttpSession session = request.getSession();
-			Object vendorIdObj = session.getAttribute("vendorId");
-			Integer vendorId = Integer.parseInt(vendorIdObj.toString());
-			QuotationService quotationService = new QuotationService();
-			List<Quotation> quotationOfVendorList = quotationService.getQuotationOfVendor(vendorId);
-			session.setAttribute("quotationOfVendorList", quotationOfVendorList);
-			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorQuoteDetails.jsp");
-			requestDispatcher.include(request, response);
+			if(acceptedQuotes.getVendor().getVendorId()==vendorId)
+			{
+				listOfQuotesWithMatchingVendor.add(acceptedQuotes);
+			}
 		}
+		session.setAttribute("allAcceptedQuotesList", listOfQuotesWithMatchingVendor);
+		
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AcceptedQuotation.jsp");
+		requestDispatcher.include(request, response);
+
+		
+		
 	}
 
 	/**
