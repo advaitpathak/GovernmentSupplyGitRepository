@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.Service.AdminService;
 import com.Service.ClientService;
 import com.Service.VendorService;
 import com.al.dao.ClientDaoImpl;
@@ -54,10 +55,7 @@ public class LoginChecker extends HttpServlet {
 		//Log for checking the user entered loginid an password 
 				logger.info("entered userid = "+loginId);
 				logger.info("entered password"+pwd);
-				
-				
-				
-				
+								
 				logger.info("user = "+loginId+"password= "+pwd+ "type=" +type);
 				Integer loginIdInt=Integer.parseInt(loginId);
 			
@@ -119,6 +117,22 @@ public class LoginChecker extends HttpServlet {
 		    	  requestDispatcher.forward(request, response);
 				 }
 				 }
+				//Login check for admin
+				 else if(type.equalsIgnoreCase("admin"))
+				 {
+					 logger.trace("in type admin");
+					 String loginIdStr = request.getParameter("loginId");
+					 String passwordStr = request.getParameter("password");
+					 
+					 if(loginIdStr.equals("admin")&&passwordStr.equals("admin"))
+					 {
+						 logger.trace("admin password matched");
+						 HttpSession session=request.getSession(true);
+						 session.setAttribute("userType","Admin");
+						 RequestDispatcher requestDispatcher=request.getRequestDispatcher("AdminPortal.jsp");
+						 requestDispatcher.forward(request, response);
+					 }
+				}
 			
 		      else  //send it to loginPage.html
 		      { 

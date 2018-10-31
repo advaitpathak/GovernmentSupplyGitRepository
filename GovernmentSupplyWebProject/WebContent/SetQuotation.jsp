@@ -28,7 +28,7 @@ Integer temp_quoteId = (Integer) object2;
 <br>
 <br>
 <br>
-<table>
+<table border="2">
 <tr><td>Quote Id</td><td>Vendor Id</td><td>Quoted Cost</td><td>Estimated Delivery Date</td><td>Quoted Quantity</td></tr>
 	<tr>
 	<form method = "post" action = "QuotationConfirmation">
@@ -36,8 +36,8 @@ Integer temp_quoteId = (Integer) object2;
 	<td><%=session.getAttribute("vendorId")%></td>
 	<td><input type="text" name = "quotedCost"/></td>
 	<td><input type="text" name = "estimatedDeliveryDate"/></td>
-	<td><input type="text" name = "quotedQuantity"/></td>
-	<td><input type="submit" value = "Submit"/></td>
+	<td><%=session.getAttribute("quoteQuantity") %></td>
+	<td><input type="submit" value = "Quote"/></td>
 	</form>
 	</tr>
 </table>

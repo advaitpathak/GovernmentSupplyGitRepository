@@ -22,5 +22,5 @@ public interface QuotationServiceInterface {
 	List<Quotation> lowestQuotedCostFisrt(List<Quotation> allQuotationList);
 	List<Quotation> earliestDelivery(List<Quotation> allQuotationList);
 	List<Quotation> getQuotationOfVendor(int vendorId);
-	List<Quotation> getQuotableOrdersForVendor(List<Quotation> allQuotationList, int loggedInVendorId);
+	List<Quotation> getQuotedOrdersForVendor(List<Quotation> allQuotationList, int loggedInVendorId);
 }

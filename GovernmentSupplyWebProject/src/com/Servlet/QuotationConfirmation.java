@@ -54,8 +54,8 @@ public class QuotationConfirmation extends HttpServlet {
 			Integer vendorId = Integer.parseInt(string);
 			String quotedCostStr = request.getParameter("quotedCost");
 			Integer quotedCost = Integer.parseInt(quotedCostStr);
-			String quotedQuantityStr = request.getParameter("quotedQuantity");
-			Integer quotedQuantity = Integer.parseInt(quotedQuantityStr);
+			Object quotedQuantityObj = session.getAttribute("quoteQuantity");
+			Integer quotedQuantity = Integer.parseInt(quotedQuantityObj.toString());
 			String estimatedDeliveryDate = request.getParameter("estimatedDeliveryDate");
 						
 			QuotationService quotationService = new QuotationService();

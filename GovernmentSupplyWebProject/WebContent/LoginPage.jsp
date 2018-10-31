@@ -17,6 +17,7 @@ Password : <input type="password" name="password" /> <br><br>
 User Type: <select name="type">
   <option value="Government Employee">Government Employee</option>
   <option value="Vendor">Vendor</option>
+  <option value="Admin">Admin</option>
 </select> <br><br>
 <input type="submit" value ="submit" >
 <hr>

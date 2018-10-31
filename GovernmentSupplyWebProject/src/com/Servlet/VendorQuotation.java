@@ -15,6 +15,8 @@ import javax.websocket.Session;
 import com.Service.OrderService;
 import com.Service.QuotationService;
 import com.Service.VendorService;
+import com.al.dao.QuotationDao;
+import com.al.dao.QuotationDaoImpl;
 import com.al.model.Order;
 import com.al.model.Quotation;
 import com.al.model.Vendor;
@@ -55,20 +57,32 @@ public class VendorQuotation extends HttpServlet {
 			int size = allQuotationList.size();
 			Quotation quotation = allQuotationList.get(size-1);
 			int quoteId = quotation.getQuoteId();
-			session.setAttribute("quoteId", quoteId+1);
+			session.setAttribute("quoteId", quoteId+1); 
 			
 			String[] parameter = request.getParameterValues("Quote");
 				
 			Integer parameterInt = Integer.parseInt(parameter[0]);
 			Order order = orderService.getOrder(parameterInt);
 			session.setAttribute("order", order);
+			int quoteQuantity = order.getQuantityRequired();
+			session.setAttribute("quoteQuantity", quoteQuantity);
 			Object vendorIdObj = session.getAttribute("vendorId");
 			String vendorIdObjStr = vendorIdObj.toString();
 			Integer vendorId = Integer.parseInt(vendorIdObjStr);
 			VendorService vendorService = new VendorService();
 			Vendor vendor = vendorService.getVendor(vendorId);
+			
 			if(vendorService.vendorEligibility(vendor))
 			{
+				for(Quotation quotation_inner : allQuotationList)
+				{
+					if(quotation_inner.getOrder().getOrderId()==order.getOrderId()&&quotation.getVendor().getVendorId()==vendorId)
+					{
+						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/QuoteAlreadyPlaced.jsp");
+						requestDispatcher.forward(request, response);
+						return;
+					}
+				}
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/SetQuotation.jsp");
 				requestDispatcher.forward(request, response);
 			}
@@ -76,10 +90,8 @@ public class VendorQuotation extends HttpServlet {
 			{
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorPortal.jsp");
 				requestDispatcher.forward(request, response);
-				System.out.println("Not eligible");
-			}
-				
-			
+				//System.out.println("Not eligible");
+			}			
 		}
 	}
 

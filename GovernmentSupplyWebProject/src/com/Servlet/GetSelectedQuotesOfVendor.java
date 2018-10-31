@@ -20,14 +20,14 @@ import com.al.model.Quotation;
 /**
  * Servlet implementation class GetSelectedQoutesOfVendor
  */
-@WebServlet("/GetSelectedQoutesOfVendor")
-public class GetSelectedQoutesOfVendor extends HttpServlet {
+@WebServlet("/GetSelectedQuotesOfVendor")
+public class GetSelectedQuotesOfVendor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetSelectedQoutesOfVendor() {
+    public GetSelectedQuotesOfVendor() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -105,7 +105,7 @@ public class QuotationService implements QuotationServiceInterface {
 		
 	    long diffInMillies = Math.abs(deadlineDate.getTime() - estimatedDeliveryDateParse.getTime());
 	    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-	    if(diff<=0)
+	    if(diff>=0)
 	    {
 	    	return true;
 	    }
@@ -145,16 +145,17 @@ public class QuotationService implements QuotationServiceInterface {
 	}
 
 	@Override
-	public List<Quotation> getQuotableOrdersForVendor(List<Quotation> allQuotationList, int loggedInVendorId) 
+	public List<Quotation> getQuotedOrdersForVendor(List<Quotation> allQuotationList, int loggedInVendorId) 
 	{
-		List<Quotation> quotableOrdersList = new ArrayList<>();
+		/*Return the list of quotations made by the logged in vendor*/
+		List<Quotation> vendorQuotedOrderList = new ArrayList<>();
 		for(Quotation quotation : allQuotationList)
 		{
 			if(quotation.getVendor().getVendorId()==loggedInVendorId)
 			{
-				quotableOrdersList.add(quotation);
+				vendorQuotedOrderList.add(quotation);
 			}
 		}
-		return quotableOrdersList;
+		return vendorQuotedOrderList;
 	}
 }	

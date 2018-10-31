@@ -51,41 +51,7 @@ public class FetchPlacedOrders extends HttpServlet {
 		{
 			HttpSession session = request.getSession();
 			OrderService orderService = new OrderService();
-			List<Order> allOrdersList = orderService.getAllOrders();
-			List<Order> unquotedOrdersList = new ArrayList<>();
-			QuotationService quotationService = new QuotationService();
-			Object obj = session.getAttribute("vendorId");
-			Integer loggedInVendorId = Integer.parseInt(obj.toString());			
-			List<Quotation> quotableOrdersForVendorList = quotationService.getQuotableOrdersForVendor(new QuotationDaoImpl().getAllQuotation(), loggedInVendorId);
-			System.out.println(quotableOrdersForVendorList);
-			System.out.println(allOrdersList);
-			for(Quotation quotation : quotableOrdersForVendorList)
-			{
-			for(Order order : allOrdersList)
-			{
-					if(quotation.getOrder().getOrderId()!=order.getOrderId()&&quotation.getVendor().getVendorId()==loggedInVendorId)
-					{
-						unquotedOrdersList.add(order);
-					}
-			}
-			}
-//			for(Quotation quotation : quotableOrdersForVendorList)
-//			{
-//				//quotation.getOrder().getOrderId();
-//				List<Quotation> quotationOfVendor = new QuotationService().getQuotationOfVendor(loggedInVendorId);
-//				for(Quotation quotation_inner : quotationOfVendor)
-//				{
-//				int temp_orderId = quotation_inner.getOrder().getOrderId();
-//				
-//				if(temp_orderId!=orderService.getOrder(temp_orderId).getOrderId())
-//				{
-//					unquotedOrdersList.add(new OrderService().getOrder(temp_orderId));
-//				}
-//				}
-//			}
-			System.out.println(unquotedOrdersList);
-			
-			
+			List<Order> allOrdersList = orderService.getAllOrders();			
 			session.setAttribute("allOrdersList", allOrdersList);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorPortal.jsp");
 			requestDispatcher.forward(request, response);

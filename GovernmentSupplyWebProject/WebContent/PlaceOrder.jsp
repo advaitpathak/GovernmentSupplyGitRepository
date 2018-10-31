@@ -62,13 +62,7 @@ for(Product product:selectedProductsList)
 	%>
     </table>
     <input type="submit" value="Confirm orders"/>
-</form>   
-
-
-
-
-   	
-	
+</form>   	
 
 </body>
 </html>

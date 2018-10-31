@@ -31,7 +31,9 @@ List<Order> orderObjList = (List<Order>) object;%>
 </form>
 <form method='post' action='GetVendorQuotes'><br><input type='submit' value='Get Quotes'/>
 </form>
-<form method='post' action="GetSelectedQoutesOfVendor"><br><input type='submit' value='Get Selected Quotes'/>
+<form method='post' action="GetSelectedQuotesOfVendor"><br><input type='submit' value='Get Selected Quotes'/>
+</form>
+<form method="post" action="Logout"><br><input type="submit" value="Logout"/>
 </form>
 
 </body></html>
