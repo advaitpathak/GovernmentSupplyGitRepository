@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.Service.AcceptedQuotesService;
 import com.Service.OrderService;
 import com.Service.QuotationService;
+import com.al.dao.QuotationDaoImpl;
 import com.al.model.AcceptedQuotes;
 import com.al.model.Order;
 import com.al.model.Quotation;
@@ -51,27 +52,39 @@ public class FetchPlacedOrders extends HttpServlet {
 			HttpSession session = request.getSession();
 			OrderService orderService = new OrderService();
 			List<Order> allOrdersList = orderService.getAllOrders();
-			List<Order> quotedOrderList = new ArrayList<Order>();
-			List<Order> unquotedOrderList = new ArrayList<Order>();
-			Object obj = session.getAttribute("vendorId");
-			Integer vendorId = Integer.parseInt(obj.toString());
+			List<Order> unquotedOrdersList = new ArrayList<>();
 			QuotationService quotationService = new QuotationService();
-			List<Quotation> allQuotation = quotationService.getAllQuotation();
-			for(Quotation quotation:allQuotation)
-			{
-				if(quotation.getVendor().getVendorId()==vendorId)
-				{
-					quotedOrderList.add(quotation.getOrder());
-				}
-			}
-			for(Order order: quotedOrderList)
-			{
-				System.out.println("in for loop");
-				System.out.println(order);
-				System.out.println(allOrdersList.indexOf(order));
-			}
-			System.out.println(quotedOrderList);
+			Object obj = session.getAttribute("vendorId");
+			Integer loggedInVendorId = Integer.parseInt(obj.toString());			
+			List<Quotation> quotableOrdersForVendorList = quotationService.getQuotableOrdersForVendor(new QuotationDaoImpl().getAllQuotation(), loggedInVendorId);
+			System.out.println(quotableOrdersForVendorList);
 			System.out.println(allOrdersList);
+			for(Quotation quotation : quotableOrdersForVendorList)
+			{
+			for(Order order : allOrdersList)
+			{
+					if(quotation.getOrder().getOrderId()!=order.getOrderId()&&quotation.getVendor().getVendorId()==loggedInVendorId)
+					{
+						unquotedOrdersList.add(order);
+					}
+			}
+			}
+//			for(Quotation quotation : quotableOrdersForVendorList)
+//			{
+//				//quotation.getOrder().getOrderId();
+//				List<Quotation> quotationOfVendor = new QuotationService().getQuotationOfVendor(loggedInVendorId);
+//				for(Quotation quotation_inner : quotationOfVendor)
+//				{
+//				int temp_orderId = quotation_inner.getOrder().getOrderId();
+//				
+//				if(temp_orderId!=orderService.getOrder(temp_orderId).getOrderId())
+//				{
+//					unquotedOrdersList.add(new OrderService().getOrder(temp_orderId));
+//				}
+//				}
+//			}
+			System.out.println(unquotedOrdersList);
+			
 			
 			session.setAttribute("allOrdersList", allOrdersList);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorPortal.jsp");

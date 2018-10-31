@@ -143,4 +143,18 @@ public class QuotationService implements QuotationServiceInterface {
 		}
 		return vendorQuotationList;
 	}
+
+	@Override
+	public List<Quotation> getQuotableOrdersForVendor(List<Quotation> allQuotationList, int loggedInVendorId) 
+	{
+		List<Quotation> quotableOrdersList = new ArrayList<>();
+		for(Quotation quotation : allQuotationList)
+		{
+			if(quotation.getVendor().getVendorId()==loggedInVendorId)
+			{
+				quotableOrdersList.add(quotation);
+			}
+		}
+		return quotableOrdersList;
+	}
 }	
