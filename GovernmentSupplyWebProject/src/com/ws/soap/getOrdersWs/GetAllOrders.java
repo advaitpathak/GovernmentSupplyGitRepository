@@ -1,4 +1,4 @@
-package com.ws.soap;
+package com.ws.soap.getOrdersWs;
 
 import java.util.List;
 

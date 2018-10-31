@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import org.apache.log4j.Logger;
+
 import com.Service.OrderService;
 import com.Service.QuotationService;
 import com.Service.VendorService;
@@ -25,7 +27,7 @@ import com.al.model.Vendor;
 @WebServlet("/VendorQuotation")
 public class VendorQuotation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger logger=Logger.getRootLogger();   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -51,22 +53,30 @@ public class VendorQuotation extends HttpServlet {
 			HttpSession session = request.getSession();
 			QuotationService quotationService = new QuotationService();
 			OrderService orderService = new OrderService();
+			
+			//Get the list of all quotations
 			List<Quotation> allQuotationList = quotationService.getAllQuotation();
+			
+			//Set quoteId of new quote as last quoteId from table plus 1
 			int size = allQuotationList.size();
 			Quotation quotation = allQuotationList.get(size-1);
 			int quoteId = quotation.getQuoteId();
 			session.setAttribute("quoteId", quoteId+1);
 			
+			//Get the order for which the quotation is being applied
 			String[] parameter = request.getParameterValues("Quote");
-				
 			Integer parameterInt = Integer.parseInt(parameter[0]);
 			Order order = orderService.getOrder(parameterInt);
 			session.setAttribute("order", order);
+			
+			//Get the vendor who is Quoting for the order
 			Object vendorIdObj = session.getAttribute("vendorId");
 			String vendorIdObjStr = vendorIdObj.toString();
 			Integer vendorId = Integer.parseInt(vendorIdObjStr);
 			VendorService vendorService = new VendorService();
 			Vendor vendor = vendorService.getVendor(vendorId);
+			
+			//Check foe vendor eligibility
 			if(vendorService.vendorEligibility(vendor))
 			{
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/SetQuotation.jsp");
@@ -76,7 +86,7 @@ public class VendorQuotation extends HttpServlet {
 			{
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorPortal.jsp");
 				requestDispatcher.forward(request, response);
-				System.out.println("Not eligible");
+				logger.info("Not eligible");
 			}
 				
 			

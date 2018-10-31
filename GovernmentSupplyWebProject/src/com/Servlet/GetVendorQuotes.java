@@ -43,6 +43,7 @@ public class GetVendorQuotes extends HttpServlet {
 		}
 		else
 		{
+			//Get list of all the quotations given by a particular vendor
 			HttpSession session = request.getSession();
 			Object vendorIdObj = session.getAttribute("vendorId");
 			Integer vendorId = Integer.parseInt(vendorIdObj.toString());

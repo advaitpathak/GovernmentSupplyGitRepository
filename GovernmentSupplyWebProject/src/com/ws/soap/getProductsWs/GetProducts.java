@@ -1,4 +1,4 @@
-package com.ws.soap;
+package com.ws.soap.getProductsWs;
 
 import java.util.List;
 

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.Service.AcceptedQuotesService;
 import com.Service.QuotationSelectionService;
 import com.al.model.AcceptedQuotes;
@@ -21,6 +23,7 @@ import com.al.model.AcceptedQuotes;
 @WebServlet("/AcceptedQuotations")
 public class AcceptedQuotations extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger=Logger.getRootLogger();  
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,30 +38,45 @@ public class AcceptedQuotations extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		HttpSession session = request.getSession();
-		String StrOrderID = request.getParameter("OrderId");
-		int orderId = Integer.parseInt(StrOrderID);
-		QuotationSelectionService quotationSelectionService = new QuotationSelectionService();
-		AcceptedQuotesService acceptedQuotesService = new AcceptedQuotesService();
-		List<AcceptedQuotes> allAcceptedQuotesList = acceptedQuotesService.getAllAcceptedQuotes();
-		for(AcceptedQuotes acceptedQuotes : allAcceptedQuotesList)
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession(false);
+		
+		if(session==null)
 		{
-			if(acceptedQuotes.getOrder().getOrderId()==orderId)
-			{	
-				System.out.println(allAcceptedQuotesList);
-				session.setAttribute("allAcceptedQuotesList", allAcceptedQuotesList);
-				RequestDispatcher requestDispatcher =request.getRequestDispatcher("/AcceptedQuotation.jsp");
-				requestDispatcher.forward(request, response);
+			 RequestDispatcher requestDispatcher=request.getRequestDispatcher("Login.jsp");
+			 requestDispatcher.include(request, response);
+		}
+		else
+		{
+			//Get the orderId of order for which accepted Quotes are to be viewed
+			String StrOrderID = request.getParameter("OrderId");
+			int orderId = Integer.parseInt(StrOrderID);
+			
+			QuotationSelectionService quotationSelectionService = new QuotationSelectionService();
+			AcceptedQuotesService acceptedQuotesService = new AcceptedQuotesService();
+			
+			//Get the list of all the quotes accepted
+			List<AcceptedQuotes> allAcceptedQuotesList = acceptedQuotesService.getAllAcceptedQuotes();
+			for(AcceptedQuotes acceptedQuotes : allAcceptedQuotesList)
+			{
+				//Get the accepted quotes of entered orderId
+				if(acceptedQuotes.getOrder().getOrderId()==orderId)
+				{	
+					logger.info(allAcceptedQuotesList);
+					session.setAttribute("allAcceptedQuotesList", allAcceptedQuotesList);
+					RequestDispatcher requestDispatcher =request.getRequestDispatcher("/AcceptedQuotation.jsp");
+					requestDispatcher.forward(request, response);
 			}
 		}
-		System.out.println("orderId= "+orderId);
+		
+		logger.info("orderId= "+orderId);
 		quotationSelectionService.quotationSelection(orderId);
 		allAcceptedQuotesList = acceptedQuotesService.getAllAcceptedQuotes();
-		System.out.println(allAcceptedQuotesList);
+		logger.info(allAcceptedQuotesList);
 		session.setAttribute("allAcceptedQuotesList", allAcceptedQuotesList);
 		RequestDispatcher requestDispatcher =request.getRequestDispatcher("/AcceptedQuotation.jsp");
 		requestDispatcher.forward(request, response);
+		}
 	}
 
 	/**

@@ -11,16 +11,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.Service.ProductService;
 import com.al.model.Product;
 
 /**
- * Servlet implementation class SelectedProducts
+ * Servlet  implementation class SelectedProducts
  */
 @WebServlet("/SelectedProducts")
 public class SelectedProducts extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger logger=Logger.getRootLogger();  
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -36,12 +38,12 @@ public class SelectedProducts extends HttpServlet {
 		// TODO Auto-generated method stub
 	
 		ProductService productService=new ProductService();
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	 String[] selectedValues = request.getParameterValues("checkboxGroup");
-	Object object;
+		//Get the selected Products from checkbox 
+		String[] selectedValues = request.getParameterValues("checkboxGroup");
+	 	
 	
-	
-	 List<Product> selectedProducts=new ArrayList<Product>();
+		//Add selected products to a list of products
+			List<Product> selectedProducts=new ArrayList<Product>();
 			for(int i=0;i<selectedValues.length;i++)
 			{
 				Integer selectedProductId=Integer.parseInt(selectedValues[i]);
@@ -49,7 +51,10 @@ public class SelectedProducts extends HttpServlet {
 				selectedProducts.add(productObj);
 				
 			}
+		//Set the list of selected products as a request attribute 
 		request.setAttribute("selectedProductsList",selectedProducts);
+		
+		//Redirect the user to placeOrder.jsp page
 		RequestDispatcher requestDispatcher=request.getRequestDispatcher("PlaceOrder.jsp");
 		requestDispatcher.include(request, response);
 	}

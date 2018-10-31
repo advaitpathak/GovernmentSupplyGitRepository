@@ -54,10 +54,6 @@ public class LoginChecker extends HttpServlet {
 		//Log for checking the user entered loginid an password 
 				logger.info("entered userid = "+loginId);
 				logger.info("entered password"+pwd);
-				
-				
-				
-				
 				logger.info("user = "+loginId+"password= "+pwd+ "type=" +type);
 				Integer loginIdInt=Integer.parseInt(loginId);
 			
@@ -65,29 +61,30 @@ public class LoginChecker extends HttpServlet {
 			 if(type.equalsIgnoreCase("Government Employee"))
 			 {
 				logger.trace("in type gov emp");
-				 //Client client=new ClientDaoImpl().getClient(loginIdInt);
-				// String password=client.getClientPassword();
 				
 				ClientService clientService=new ClientService();
 				Client client = clientService.getClient(loginIdInt);
 				if(client != null)
 				{
-				String password=client.getClientPassword();
-				 logger.trace("client password:"+password);
-				 if(password.equals(pwd))
-				 {
+					String password=client.getClientPassword();
+					logger.trace("client password:"+password);
+				 //Checking user entered password with database stored password
+					if(password.equals(pwd))//If password matches
+					{
 				  
-				  logger.trace("gov emp password matched");
-				  HttpSession session=request.getSession(true);
-				  session.setAttribute("userType", "Government employee");
-		    	  session.setAttribute("client", client);
-		    	  session.setAttribute("clientId", loginIdInt);
-		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("ClientPageDetails");
-		    	  requestDispatcher.forward(request, response);
+						logger.trace("gov emp password matched");
+				  //create session for that client and set userType,client and clientId as session attributes
+						HttpSession session=request.getSession(true);
+						session.setAttribute("userType", "Government employee");
+						session.setAttribute("client", client);
+						session.setAttribute("clientId", loginIdInt);
+		    	  //Send control to clientPageDetils
+						RequestDispatcher requestDispatcher=request.getRequestDispatcher("ClientPageDetails");
+						requestDispatcher.forward(request, response);
 				 }
 				}
 					 
-				 else  //send it to loginPage.jsp
+				 else  //If password does not matches send error message and redirect to loginPage.jsp
 			      { 
 			    	  
 			    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
@@ -99,28 +96,30 @@ public class LoginChecker extends HttpServlet {
 			 else if(type.equalsIgnoreCase("vendor"))
 			 {
 				 logger.trace("in type vendor");
-//				 Vendor vendor=new VendorDaoImpl().getVendor(loginIdInt);
-//				 String password=vendor.getVendorPassword();
-				 
+
 				 VendorService vendorService=new VendorService();
 				 Vendor vendor = vendorService.getVendor(loginIdInt);
 				 if(vendor !=null)
 				 {
-				 String password=vendor.getVendorPassword();
-				 logger.trace("system passsword "+password);
-				 if(password.equals(pwd))
-				 {
-					logger.trace("vendor password matched");
-				  HttpSession session=request.getSession(true);
-				  session.setAttribute("userType","Vendor");
-		    	  session.setAttribute("vendor", vendor);
-		    	  session.setAttribute("vendorId", loginId);
-		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("FetchPlacedOrders");
-		    	  requestDispatcher.forward(request, response);
+					 String password=vendor.getVendorPassword();
+					 logger.trace("system passsword "+password);
+					 
+					 //checking if entered password is right
+					 if(password.equals(pwd))
+					 {
+						 logger.trace("vendor password matched");
+						 HttpSession session=request.getSession(true);
+						 
+						 //create session and add usertype,vendor and vendorId as session Attribute
+						 session.setAttribute("userType","Vendor");
+						 session.setAttribute("vendor", vendor);
+						 session.setAttribute("vendorId", loginId);
+						 RequestDispatcher requestDispatcher=request.getRequestDispatcher("FetchPlacedOrders");
+						 requestDispatcher.forward(request, response);
 				 }
 				 }
 			
-		      else  //send it to loginPage.html
+		      else  //If password is wrong send it to loginPage.html
 		      { 
 		    	
 		    	  RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
@@ -137,7 +136,7 @@ public class LoginChecker extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 		
 				
 		doGet(request, response);

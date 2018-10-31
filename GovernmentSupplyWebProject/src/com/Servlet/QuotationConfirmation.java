@@ -43,7 +43,10 @@ public class QuotationConfirmation extends HttpServlet {
 		}
 		else
 		{
+			
 			HttpSession session = request.getSession();
+			
+			//Get the QuoteId,Order and VendorId for adding a quotation 
 			Object quoteIdObj = session.getAttribute("quoteId");
 			Integer quoteId = (Integer) quoteIdObj;
 			Object orderObj = session.getAttribute("order");
@@ -52,6 +55,8 @@ public class QuotationConfirmation extends HttpServlet {
 			Object vendorIdObj = session.getAttribute("vendorId");
 			String string = vendorIdObj.toString();
 			Integer vendorId = Integer.parseInt(string);
+			
+			//Get the quotedCost,quotedQuantity ,Estimated Delivery from the vendor as parameters
 			String quotedCostStr = request.getParameter("quotedCost");
 			Integer quotedCost = Integer.parseInt(quotedCostStr);
 			String quotedQuantityStr = request.getParameter("quotedQuantity");
@@ -59,6 +64,8 @@ public class QuotationConfirmation extends HttpServlet {
 			String estimatedDeliveryDate = request.getParameter("estimatedDeliveryDate");
 						
 			QuotationService quotationService = new QuotationService();
+			
+			
 			boolean checkEstimateDate = quotationService.checkEstimateDate(estimatedDeliveryDate,order.getDeadline());
 			
 			if(checkEstimateDate)
