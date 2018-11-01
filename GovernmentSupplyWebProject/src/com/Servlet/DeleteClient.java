@@ -47,15 +47,26 @@ public class DeleteClient extends HttpServlet {
 		}
 		else
 		{
-			ClientService clientService = new ClientService();
-			HttpSession session = request.getSession();
-			String clientIdStr = request.getParameter("deleteClientId");
-			Integer clientId = Integer.parseInt(clientIdStr);
-			clientService.deleteClient(new ClientDaoImpl().getClient(clientId));
-			List<Client> allClientList = clientService.getAllClient();
-			session.setAttribute("allClientList", allClientList);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableClients.jsp");
-			requestDispatcher.forward(request, response);
+			try {
+				ClientService clientService = new ClientService();
+				HttpSession session = request.getSession();
+				String clientIdStr = request.getParameter("deleteClientId");
+				Integer clientId = Integer.parseInt(clientIdStr);
+				clientService.deleteClient(new ClientDaoImpl().getClient(clientId));
+				List<Client> allClientList = clientService.getAllClient();
+				session.setAttribute("allClientList", allClientList);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableClients.jsp");
+				requestDispatcher.forward(request, response);
+			} catch (NumberFormatException | NullPointerException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Failed to delete Client. Invalid ClientId");
+				String exceptionName = "Failed to delete Client. Invalid ClientId";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "AdminPortal.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.forward(request, response);
+			}
 		}
 
 	}

@@ -47,15 +47,26 @@ public class DeleteVendor extends HttpServlet {
 		}
 		else
 		{
-			VendorService vendorService = new VendorService();
-			HttpSession session = request.getSession();
-			String vendorIdStr = request.getParameter("deleteVendorId");
-			Integer vendorId = Integer.parseInt(vendorIdStr);
-			vendorService.deleteVendor(new VendorDaoImpl().getVendor(vendorId));
-			List<Vendor> allVendorsList = vendorService.getAllVendors();
-			session.setAttribute("allVendorList", allVendorsList);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableVendors.jsp");
-			requestDispatcher.forward(request, response);
+			try {
+				VendorService vendorService = new VendorService();
+				HttpSession session = request.getSession();
+				String vendorIdStr = request.getParameter("deleteVendorId");
+				Integer vendorId = Integer.parseInt(vendorIdStr);
+				vendorService.deleteVendor(new VendorDaoImpl().getVendor(vendorId));
+				List<Vendor> allVendorsList = vendorService.getAllVendors();
+				session.setAttribute("allVendorList", allVendorsList);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableVendors.jsp");
+				requestDispatcher.forward(request, response);
+			} catch (NumberFormatException | NullPointerException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Failed to delete Vendor. Invalid VendorId");
+				String exceptionName = "Failed to delete Vendor. Invalid VendorId";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "AdminPortal.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.forward(request, response);
+			}
 		}
 
 	}

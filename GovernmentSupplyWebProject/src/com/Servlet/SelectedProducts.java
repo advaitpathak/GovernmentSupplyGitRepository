@@ -37,7 +37,7 @@ public class SelectedProducts extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
+	try{
 		HttpSession session = request.getSession();
 		ProductService productService=new ProductService();
 		//Get the selected Products from checkbox 
@@ -59,6 +59,18 @@ public class SelectedProducts extends HttpServlet {
 		//Redirect the user to placeOrder.jsp page
 		RequestDispatcher requestDispatcher=request.getRequestDispatcher("PlaceOrder.jsp");
 		requestDispatcher.include(request, response);
+	}
+	catch(NumberFormatException | NullPointerException e)
+	{
+		System.out.println("Please select at least one order");
+		//should go back to GovernmentEmployeePortal.jsp
+		String exceptionName = "Please select at least one order";
+		request.setAttribute( "exceptionName",exceptionName);
+		String OriginPage = "GovernmentEmployeePortal.jsp";
+		request.setAttribute("OriginPage", OriginPage);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+		requestDispatcher.forward(request, response);
+	}
 	}
 
 	/**

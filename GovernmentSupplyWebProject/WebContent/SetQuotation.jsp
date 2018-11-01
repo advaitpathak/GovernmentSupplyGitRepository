@@ -34,10 +34,10 @@ Integer temp_quoteId = (Integer) object2;
 	<form method = "post" action = "QuotationConfirmation">
 	<td><%=temp_quoteId%></td>
 	<td><%=session.getAttribute("vendorId")%></td>
-	<td><input type="text" name = "quotedCost"/></td>
-	<td><input type="text" name = "estimatedDeliveryDate"/></td>
+	<td><input type="text" name = "quotedCost" required/></td>
+	<td><input type="text" name = "estimatedDeliveryDate"required/></td>
 	<td><%=session.getAttribute("quoteQuantity") %></td>
-	<td><input type="submit" value = "Quote"/></td>
+	<td><input type="submit" value = "Quote" required/></td>
 	</form>
 	</tr>
 </table>

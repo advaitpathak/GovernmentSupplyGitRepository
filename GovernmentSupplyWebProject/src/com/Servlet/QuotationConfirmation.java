@@ -1,6 +1,11 @@
 package com.Servlet;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,6 +48,7 @@ public class QuotationConfirmation extends HttpServlet {
 		}
 		else
 		{
+			try{
 			
 			HttpSession session = request.getSession();
 			
@@ -62,6 +68,11 @@ public class QuotationConfirmation extends HttpServlet {
 			Object quotedQuantityObj = session.getAttribute("quoteQuantity");
 			Integer quotedQuantity = Integer.parseInt(quotedQuantityObj.toString());
 			String estimatedDeliveryDate = request.getParameter("estimatedDeliveryDate");
+			Date estimatedDeliveryDateParse;
+			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			sdf.setLenient(false);
+			estimatedDeliveryDateParse = sdf.parse(estimatedDeliveryDate);//Just for exception handling
+		   System.out.println(estimatedDeliveryDateParse);
 						
 			QuotationService quotationService = new QuotationService();
 			
@@ -84,7 +95,15 @@ public class QuotationConfirmation extends HttpServlet {
 				requestDispatcher.forward(request, response);
 				System.out.println("Date entered is after deadline");
 			}
-			
+			} catch (NumberFormatException |ParseException e) {
+				// TODO Auto-generated catch block
+				String exceptionName = "Quotation can not be placed due to invalid entries";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "SetQuotation.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.forward(request, response);
+			}
 		}
 	}
 

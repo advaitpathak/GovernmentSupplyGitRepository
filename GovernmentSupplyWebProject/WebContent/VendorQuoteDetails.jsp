@@ -27,7 +27,7 @@
 	<%} %>
 </table>
 <br><br>
-<form method='post' action='VendorPortal.jsp'><br><input type='submit' value='Back'/>
+<form method='post' action='VendorPortal.jsp'><br><input type='submit' value='Back'required/>
 </form>
 </body>
 </html>

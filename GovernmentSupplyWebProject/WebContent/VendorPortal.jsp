@@ -22,18 +22,18 @@ List<Order> orderObjList = (List<Order>) object;%>
 	<td><%=order.getOrderPlacedDate()%></td>
 	<td><%=order.getDeadline()%></td>
 	<td><form method = "post" action = "VendorQuotation">
-		<input type="submit" name="Quote" value = "<%=order.getOrderId()%>"/></form>
+		<input type="submit" name="Quote" value = "<%=order.getOrderId()%>" required/></form>
 	</td>
 	</tr>	
 	<% }%>
 </table>
-<form method='post' action='LoginPage.jsp'><br><input type='submit' value='Back'/>
+<form method='post' action='LoginPage.jsp'><br><input type='submit' value='Back'required/>
 </form>
-<form method='post' action='GetVendorQuotes'><br><input type='submit' value='Get Quotes'/>
+<form method='post' action='GetVendorQuotes'><br><input type='submit' value='Get Quotes'required/>
 </form>
-<form method='post' action="GetSelectedQuotesOfVendor"><br><input type='submit' value='Get Selected Quotes'/>
+<form method='post' action="GetSelectedQuotesOfVendor"><br><input type='submit' value='Get Selected Quotes'required/>
 </form>
-<form method="post" action="Logout"><br><input type="submit" value="Logout"/>
+<form method="post" action="Logout"><br><input type="submit" value="Logout" required/>
 </form>
 
 </body></html>

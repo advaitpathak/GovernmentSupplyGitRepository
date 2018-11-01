@@ -49,6 +49,7 @@ public class FetchPlacedOrders extends HttpServlet {
 		}
 		else
 		{
+			try {
 			
 			HttpSession session = request.getSession();
 			OrderService orderService = new OrderService();
@@ -56,6 +57,12 @@ public class FetchPlacedOrders extends HttpServlet {
 			session.setAttribute("allOrdersList", allOrdersList);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorPortal.jsp");
 			requestDispatcher.forward(request, response);
+			} 
+			catch (NumberFormatException | NullPointerException e) {
+				//
+				System.out.println("Invalid entry");
+				
+			}
 		}
 	}
 

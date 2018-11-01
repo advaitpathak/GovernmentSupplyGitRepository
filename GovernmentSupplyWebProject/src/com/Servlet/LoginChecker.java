@@ -60,8 +60,10 @@ public class LoginChecker extends HttpServlet {
 				//Integer loginIdInt=Integer.parseInt(loginId);
 			
 		//Login check for government employee
+				try {
 			 if(type.equalsIgnoreCase("Government Employee"))
 			 {
+				 
 				 Integer loginIdInt=Integer.parseInt(loginId);
 				logger.trace("in type gov emp");
 				 //Client client=new ClientDaoImpl().getClient(loginIdInt);
@@ -144,6 +146,16 @@ public class LoginChecker extends HttpServlet {
 						 requestDispatcher.include(request, response);
 					 }
 				 }
+			 } catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					String exceptionName = "Invalid Login creadentials";
+					request.setAttribute( "exceptionName",exceptionName);
+					String OriginPage = "LoginPage.jsp";
+					request.setAttribute("OriginPage", OriginPage);
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+					requestDispatcher.forward(request, response);
+				
+				}
 	}
 
 	/**

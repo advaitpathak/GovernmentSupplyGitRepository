@@ -47,7 +47,7 @@ for(AcceptedQuotes acceptedQuotes:allAcceptedQuotes)
     
 <br>
 <br>
-<form method='post' action='GovernmentEmployeePortal.jsp'><br><input type='submit' value='Back'/>
+<form method='post' action='VendorPortal.jsp'><br><input type='submit' value='Back'/>
 </form>
     
 </body>

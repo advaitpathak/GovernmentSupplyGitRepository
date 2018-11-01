@@ -39,6 +39,7 @@ public class AcceptedQuotations extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
 		HttpSession session = request.getSession(false);
 		
 		if(session==null)
@@ -76,6 +77,16 @@ public class AcceptedQuotations extends HttpServlet {
 		session.setAttribute("allAcceptedQuotesList", allAcceptedQuotesList);
 		RequestDispatcher requestDispatcher =request.getRequestDispatcher("/AcceptedQuotation.jsp");
 		requestDispatcher.forward(request, response);
+		}
+		} catch (IndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			System.out.println("no quotes are received for this order");
+			String exceptionName = "No quotes are received for this order";
+			request.setAttribute( "exceptionName",exceptionName);
+			String OriginPage = "GovernmentEmployeePortal.jsp";
+			request.setAttribute("OriginPage", OriginPage);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+			requestDispatcher.include(request, response);
 		}
 	}
 

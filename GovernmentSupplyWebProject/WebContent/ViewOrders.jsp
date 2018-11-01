@@ -53,7 +53,7 @@ for(Order order:allOrderList)
     </table>
 <br>
 <br>
-<form method='post' action='GovernmentEmployeePortal.jsp'><br><input type='submit' value='Back'/>
+<form method='post' action='GovernmentEmployeePortal.jsp'><br><input type='submit' value='Back' required/>
 </form>
 
 

@@ -48,28 +48,39 @@ public class AddVendor extends HttpServlet {
 		}
 		else
 		{
-			HttpSession session = request.getSession();
-			Object vendorIdObj = session.getAttribute("addVendorId");
-			Integer vendorId = Integer.parseInt(vendorIdObj.toString());
-			String vendorNameStr = request.getParameter("vendorName");
-			String vendorRatingStr = request.getParameter("vendorRating");
-			Integer vendorRating = Integer.parseInt(vendorRatingStr);
-			String establishedDateStr = request.getParameter("establishedDate");
-			String vendorPasswordStr = request.getParameter("vendorPassword");
-		
-		VendorService vendorService = new VendorService();
-		try 
-		{
-			vendorService.addVendor(new Vendor(vendorId, vendorNameStr, vendorRating, establishedDateStr, vendorPasswordStr));
-		} 
-		catch (VendorExistsException e) 
-		{
-			e.printStackTrace();
-		}
-		List<Vendor> allVendorsList = vendorService.getAllVendors();
-		session.setAttribute("allVendorList", allVendorsList);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableVendors.jsp");
-		requestDispatcher.forward(request, response);
+			try {
+				HttpSession session = request.getSession();
+				Object vendorIdObj = session.getAttribute("addVendorId");
+				Integer vendorId = Integer.parseInt(vendorIdObj.toString());
+				String vendorNameStr = request.getParameter("vendorName");
+				String vendorRatingStr = request.getParameter("vendorRating");
+				Integer vendorRating = Integer.parseInt(vendorRatingStr);
+				String establishedDateStr = request.getParameter("establishedDate");
+				String vendorPasswordStr = request.getParameter("vendorPassword");
+
+VendorService vendorService = new VendorService();
+try 
+{
+				vendorService.addVendor(new Vendor(vendorId, vendorNameStr, vendorRating, establishedDateStr, vendorPasswordStr));
+} 
+catch (VendorExistsException e) 
+{
+				e.printStackTrace();
+}
+List<Vendor> allVendorsList = vendorService.getAllVendors();
+session.setAttribute("allVendorList", allVendorsList);
+RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableVendors.jsp");
+requestDispatcher.forward(request, response);
+			} catch (NumberFormatException | NullPointerException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Failed to add Vendor. Invalid entries");
+				String exceptionName = "Failed to add Vendor. Invalid entries";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "AdminPortal.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.forward(request, response);
+			}
 		}
 
 	}

@@ -46,16 +46,28 @@ public class DeleteProduct extends HttpServlet {
 		}
 		else
 		{
-			ProductService productService = new ProductService();
-			HttpSession session = request.getSession();
-			String productIdStr = request.getParameter("deleteProductId");
-			Integer productId = Integer.parseInt(productIdStr);
-			productService.deleteProduct(new ProductDaoImpl().getProduct(productId));
-			List<Product> allProductList = productService.getAllProduct();
-			session.setAttribute("allProductList", allProductList);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
-			requestDispatcher.forward(request, response);
+			try {
+				ProductService productService = new ProductService();
+				HttpSession session = request.getSession();
+				String productIdStr = request.getParameter("deleteProductId");
+				Integer productId = Integer.parseInt(productIdStr);
+				productService.deleteProduct(new ProductDaoImpl().getProduct(productId));
+				List<Product> allProductList = productService.getAllProduct();
+				session.setAttribute("allProductList", allProductList);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
+				requestDispatcher.forward(request, response);
+			} catch (NumberFormatException |NullPointerException e) {
+				System.out.println("Invalid product Id");
+				String exceptionName = "Invalid product Id";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "AdminPortal.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.forward(request, response);
+			
+			}
 		}
+	
 
 	}
 

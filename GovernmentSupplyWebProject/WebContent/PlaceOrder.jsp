@@ -50,9 +50,9 @@ for(Product product:selectedProductsList)
                 <td><%=product.getProductId() %></td>
 				<td><%=product.getProductName() %></td>
 				<td><%=product.getProductDetails() %> </td>
-				<td align="left"><input type="text" name="<%=quantity%>"/></td>
-				<td align="left"><input type="text" name= "<%=OrderPlacedDate %>"/></td>
-				<td align="left"><input type="text" name="<%=deadLine%>"/></td>
+				<td align="left"><input type="text" name="<%=quantity%>" required/></td>
+				<td align="left"><input type="text" name= "<%=OrderPlacedDate %>" required/></td>
+				<td align="left"><input type="text" name="<%=deadLine%>" required/></td>
 				
 				<% count++;%>              
             </tr>

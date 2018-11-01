@@ -49,27 +49,36 @@ public class AddClient extends HttpServlet {
 		}
 		else
 		{
-			HttpSession session = request.getSession();
-			Object clientIdObj = session.getAttribute("addClientId");
-			Integer clientId = Integer.parseInt(clientIdObj.toString());
-			String clientNameStr = request.getParameter("clientName");
-			String clientEmailStr = request.getParameter("clientEmail");
-			String clientPasswordStr = request.getParameter("clientPassword");
-			String clientContactNo = request.getParameter("clientContactNo");
-		
-		ClientService clientService = new ClientService();
-		try 
-		{
-			clientService.addClient(new Client(clientId, clientNameStr, clientEmailStr, clientPasswordStr, clientContactNo));
-		} 
-		catch (ClientExistException e) 
-		{
-			e.printStackTrace();
-		}
-		List<Client> allClientList = clientService.getAllClient();
-		session.setAttribute("allClientList", allClientList);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableClients.jsp");
-		requestDispatcher.forward(request, response);
+			try {
+				HttpSession session = request.getSession();
+				Object clientIdObj = session.getAttribute("addClientId");
+				Integer clientId = Integer.parseInt(clientIdObj.toString());
+				String clientNameStr = request.getParameter("clientName");
+				String clientEmailStr = request.getParameter("clientEmail");
+				String clientPasswordStr = request.getParameter("clientPassword");
+				String clientContactNo = request.getParameter("clientContactNo");
+
+				ClientService clientService = new ClientService();
+
+				clientService.addClient(new Client(clientId, clientNameStr, clientEmailStr, clientPasswordStr, clientContactNo));
+
+				List<Client> allClientList = clientService.getAllClient();
+				session.setAttribute("allClientList", allClientList);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableClients.jsp");
+				requestDispatcher.include(request, response);
+			} catch (NumberFormatException | NullPointerException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Failed to add Client. Please enter valid data");
+				String exceptionName = "Failed to add Client. Please enter valid data";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "AdminPortal.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.include(request, response);
+			} catch (ClientExistException e) {
+	// TODO Auto-generated catch block			
+	e.printStackTrace();
+}
 		}
 
 	}

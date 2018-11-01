@@ -45,29 +45,40 @@ public class AddProduct extends HttpServlet {
 		}
 		else
 		{
-			HttpSession session = request.getSession();
-			Object productIdObj = session.getAttribute("addProductId");
-			Integer productId = Integer.parseInt(productIdObj.toString());
-			String productNameStr = request.getParameter("productName");
-			String productCostStr = request.getParameter("productCost");
-			Integer productCost = Integer.parseInt(productCostStr);
-			String sectionIdStr = request.getParameter("sectionId");
-			Integer sectionId = Integer.parseInt(sectionIdStr);
-			String productDetailStr = request.getParameter("productDetail");
-		
-			ProductService productService = new ProductService();
-			try 
-			{
-				productService.addProduct(new Product(productId, productNameStr, productCost, productDetailStr, new SectionDaoImpl().getSection(sectionId)));
-			} 
-			catch (ProductExistException e) 
-			{
-				e.printStackTrace();
+			try {
+				HttpSession session = request.getSession();
+				Object productIdObj = session.getAttribute("addProductId");
+				Integer productId = Integer.parseInt(productIdObj.toString());
+				String productNameStr = request.getParameter("productName");
+				String productCostStr = request.getParameter("productCost");
+				Integer productCost = Integer.parseInt(productCostStr);
+				String sectionIdStr = request.getParameter("sectionId");
+				Integer sectionId = Integer.parseInt(sectionIdStr);
+				String productDetailStr = request.getParameter("productDetail");
+
+				ProductService productService = new ProductService();
+				try 
+				{
+					productService.addProduct(new Product(productId, productNameStr, productCost, productDetailStr, new SectionDaoImpl().getSection(sectionId)));
+				} 
+				catch (ProductExistException e) 
+				{
+					e.printStackTrace();
+				}
+				List<Product> allProductList = productService.getAllProduct();
+				session.setAttribute("allProductList", allProductList);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
+				requestDispatcher.forward(request, response);
+			} catch (NumberFormatException | NullPointerException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Failed to add Product. Please enter valid data");
+				String exceptionName = "Failed to add Product. Please enter valid data";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "AdminPortal.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.forward(request, response);
 			}
-			List<Product> allProductList = productService.getAllProduct();
-			session.setAttribute("allProductList", allProductList);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
-			requestDispatcher.forward(request, response);
 		}
 	}
 

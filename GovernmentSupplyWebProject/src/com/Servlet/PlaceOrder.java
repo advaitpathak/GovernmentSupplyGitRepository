@@ -1,7 +1,11 @@
 package com.Servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,6 +45,7 @@ public class PlaceOrder extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		 try {
 		HttpSession session=request.getSession(false);
 		
 		
@@ -71,8 +76,19 @@ public class PlaceOrder extends HttpServlet {
 			
 			String quantityRequired = request.getParameter(quantity);
 			String orderPlacedDate = request.getParameter(OrderPlacedDate);
-			String deadline = request.getParameter(DeadLine);
-			logger.info(quantityRequired+orderPlacedDate+deadline);
+			String deadLine = request.getParameter(DeadLine);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			
+			
+			Date orderPlacedDateParse;
+			Date deadLineDateParse;
+			try {
+				System.out.println("try entered");
+			orderPlacedDateParse = sdf.parse(orderPlacedDate);//just for exception handling
+			deadLineDateParse = sdf.parse(deadLine);
+				System.out.println(quantityRequired+orderPlacedDate+deadLine);
+			
+			logger.info(quantityRequired+orderPlacedDate+deadLine);
 			 
 			//Get the last orderId from database and set the new orderId as plus one of last order entry
 			List<Order> allOrders = orderService.getAllOrders();
@@ -81,8 +97,21 @@ public class PlaceOrder extends HttpServlet {
 			orderId++;
 			
 			//Place order with user entered inputs
-			orderService.getOrderFromUser(orderId, clientId,productId, Integer.parseInt(quantityRequired),orderPlacedDate, deadline);
+			orderService.getOrderFromUser(orderId, clientId,productId, Integer.parseInt(quantityRequired),orderPlacedDate, deadLine);
+			} catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				System.out.println("Order con nont be placed  invalid date");
+				String exceptionName = "Order can not be placed due to invalid entries";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "PlaceOrder.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.forward(request, response);
 			
+				
+				//should go back to PlaceOrder.jsp
+			}
 			
 		}
 		
@@ -93,7 +122,23 @@ public class PlaceOrder extends HttpServlet {
 		//To view the placed orders redirect to ViewOrders.jsp page
 		RequestDispatcher requestDispatcher=request.getRequestDispatcher("ViewOrders.jsp");
 		requestDispatcher.include(request, response);
-		
+		 } catch (NumberFormatException | IllegalStateException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Order could'nt be placed  please enter valid entries");
+				System.out.println("Order con nont be placed  invalid date");
+				String exceptionName = "Order can not be placed due to invalid entries";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "PlaceOrder.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				try {
+					requestDispatcher.forward(request, response);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//should go back to PlaceOrder.jsp
+			}
 		
 	}
 
