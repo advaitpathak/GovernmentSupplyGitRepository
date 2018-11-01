@@ -134,7 +134,7 @@ public class LoginChecker extends HttpServlet {
 						 logger.trace("admin password matched");
 						 HttpSession session=request.getSession(true);
 						 session.setAttribute("userType","Admin");
-						 RequestDispatcher requestDispatcher=request.getRequestDispatcher("AdminPortal.jsp");
+						 RequestDispatcher requestDispatcher=request.getRequestDispatcher("AdminPortal");
 						 requestDispatcher.forward(request, response);
 					 }
 					 else  //send it to loginPage.html

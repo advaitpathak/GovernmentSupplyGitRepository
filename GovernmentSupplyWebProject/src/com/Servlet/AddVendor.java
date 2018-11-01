@@ -49,8 +49,8 @@ public class AddVendor extends HttpServlet {
 		else
 		{
 			HttpSession session = request.getSession();
-			String vendorIdStr = request.getParameter("vendorId");
-			Integer vendorId = Integer.parseInt(vendorIdStr);
+			Object vendorIdObj = session.getAttribute("addVendorId");
+			Integer vendorId = Integer.parseInt(vendorIdObj.toString());
 			String vendorNameStr = request.getParameter("vendorName");
 			String vendorRatingStr = request.getParameter("vendorRating");
 			Integer vendorRating = Integer.parseInt(vendorRatingStr);

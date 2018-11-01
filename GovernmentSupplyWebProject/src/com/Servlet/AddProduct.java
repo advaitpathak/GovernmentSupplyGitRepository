@@ -46,28 +46,28 @@ public class AddProduct extends HttpServlet {
 		else
 		{
 			HttpSession session = request.getSession();
-		String productIdStr = request.getParameter("productId");
-		Integer productId = Integer.parseInt(productIdStr);
-		String productNameStr = request.getParameter("productName");
-		String productCostStr = request.getParameter("productCost");
-		Integer productCost = Integer.parseInt(productCostStr);
-		String sectionIdStr = request.getParameter("sectionId");
-		Integer sectionId = Integer.parseInt(sectionIdStr);
-		String productDetailStr = request.getParameter("productDetail");
+			Object productIdObj = session.getAttribute("addProductId");
+			Integer productId = Integer.parseInt(productIdObj.toString());
+			String productNameStr = request.getParameter("productName");
+			String productCostStr = request.getParameter("productCost");
+			Integer productCost = Integer.parseInt(productCostStr);
+			String sectionIdStr = request.getParameter("sectionId");
+			Integer sectionId = Integer.parseInt(sectionIdStr);
+			String productDetailStr = request.getParameter("productDetail");
 		
-		ProductService productService = new ProductService();
-		try 
-		{
-			productService.addProduct(new Product(productId, productNameStr, productCost, productDetailStr, new SectionDaoImpl().getSection(sectionId)));
-		} 
-		catch (ProductExistException e) 
-		{
-			e.printStackTrace();
-		}
-		List<Product> allProductList = productService.getAllProduct();
-		session.setAttribute("allProductList", allProductList);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
-		requestDispatcher.forward(request, response);
+			ProductService productService = new ProductService();
+			try 
+			{
+				productService.addProduct(new Product(productId, productNameStr, productCost, productDetailStr, new SectionDaoImpl().getSection(sectionId)));
+			} 
+			catch (ProductExistException e) 
+			{
+				e.printStackTrace();
+			}
+			List<Product> allProductList = productService.getAllProduct();
+			session.setAttribute("allProductList", allProductList);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
+			requestDispatcher.forward(request, response);
 		}
 	}
 

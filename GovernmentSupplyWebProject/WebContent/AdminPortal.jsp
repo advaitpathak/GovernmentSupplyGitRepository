@@ -4,80 +4,91 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Admin Portal</title>
 </head>
 <body>
+<%	Object productIdObj = session.getAttribute("addProductId");
+	Integer addProductId = (Integer) productIdObj; 
+	Object clientIdObj = session.getAttribute("addClientId");
+	Integer addClientId = (Integer) clientIdObj;
+	Object vendorIdObj = session.getAttribute("addVendorId");
+	Integer addVendorId = (Integer) vendorIdObj;
+%>
+<center><h2>Welcome Admin</h2></center>
 <br>
 <br>
 <form method='post' action='AddProduct'>
-<center>
-<input type="text" name = "productId" value="Id"/>
-<input type="text" name = "productName" value="Name"/>
-<input type="text" name = "productCost" value="Cost"/>
-<input type="text" name = "sectionId" value="Section Id"/>
-<input type="text" name = "productDetail" value="Details"/>
-<br>
-<br>
-<input type='submit' value='Add Product'/>
-</center>
+<table border="2"><tr><td>Product Id</td><td>Product Name</td><td>Product Cost</td><td>Section Id</td><td>Product Detail</td></tr>
+<tr>
+<td><%=addProductId %></td>
+<td><input type="text" name = "productName"/></td>
+<td><input type="text" name = "productCost"/></td>
+<td><input type="text" name = "sectionId"/></td>
+<td><input type="text" name = "productDetail"/></td>
+<td><input type='submit' value='Add Product'/></td>
+</tr>
+</table>
 </form>
-
 <br>
 <br>
-
 <form method='post' action='DeleteProduct'>
-<center>
 <input type="text" name = "deleteProductId" value="Id"/>
 <input type='submit' value='Delete Product'/>
-</center>
 </form>
 
 <br>
 <br>
-<form method='post' action='AddClient'>
-<center>
-<input type="text" name = "clientId" value="Id"/>
-<input type="text" name = "clientName" value="Name"/>
-<input type="text" name = "clientEmail" value="Email"/>
-<input type="text" name = "clientPassword" value="Password"/>
-<input type="text" name = "clientContactNo" value="Contact No"/>
-<br>
-<br>
-<input type='submit' value='Add Client' value="Client Id"/>
-</center>
+<form>
+<table border="2"><tr><td>Client Id</td><td>Client Name</td><td>Client Email</td><td>Client Password</td><td>Client Contact No</td></tr>
+<tr>
+<td><%=addClientId %></td>
+<td><input type="text" name = "clientName"/></td>
+<td><input type="text" name = "clientEmail"/></td>
+<td><input type="text" name = "clientPassword"/></td>
+<td><input type="text" name = "clientContactNo"/></td>
+<td><input type='submit' value='Add Client' value="Client Id"/></td>
+</tr>
+</table>
 </form>
 
 <br>
 <br>
 <form method='post' action='DeleteClient'>
-<center>
 <input type="text" name = "deleteClientId" value="Id"/>
 <input type='submit' value='Delete Client'/>
-</center>
 </form>
 
 <br>
 <br>
 <form method='post' action='AddVendor'>
-<center>
-<input type="text" name = "vendorId" value="Id"/>
-<input type="text" name = "vendorName" value="Name"/>
-<input type="text" name = "vendorRating" value="Rating"/>
-<input type="text" name = "establishedDate" value="Establied Date(YYYY-MM-DD)"/>
-<input type="text" name = "vendorPassword" value="Password"/>
-<br>
-<br>
-<input type='submit' value='Add Vendor'/>
-</center>
+<table border="2"><tr><td>Vendor Id</td><td>Vendor Name</td><td>Vendor Rating</td><td>Established Date</td><td>Vendor Password</td></tr>
+<tr>
+<td><%=addVendorId %></td>
+<td><input type="text" name = "vendorName"/></td>
+<td><input type="text" name = "vendorRating"/></td>
+<td><input type="text" name = "establishedDate" value="YYYY-MM-DD"/></td>
+<td><input type="text" name = "vendorPassword"/></td>
+<td><input type='submit' value='Add Vendor'/></td>
+</tr>
+</table>
 </form>
 
 <br>
 <br>
 <form method='post' action='DeleteVendor'>
-<center>
 <input type="text" name = "deleteVendorId" value="Id"/>
-<input type='submit' value='Delete Client'/>
-</center>
+<input type='submit' value='Delete Vendor'/>
+</form>
+<br>
+<br>
+<form method='post' action='UpdateVendorRanking'>
+<table border="2"><tr><td>Vendor Id</td><td>New Vendor Rank</td></tr>
+<tr>
+<td><input type="text" name = "vendorIdToUpdate"/></td>
+<td><input type="text" name = "updatedVendorRating"/></td>
+<td><input type='submit' value='Update'/></td>
+</tr>
+</table>
 </form>
 <br>
 <br>

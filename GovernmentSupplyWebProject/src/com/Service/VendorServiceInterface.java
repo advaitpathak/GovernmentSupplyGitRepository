@@ -20,4 +20,5 @@ public interface VendorServiceInterface {
 	boolean vendorEligibility(Vendor vendor);
 	List<Vendor> oldestVendor(List<Vendor> allVendorList);
 	List<Vendor> bestVendorFirst(List<Vendor> allVendorList);
+	void updateVendorRating(int vendorRating, Vendor vendor);
 }

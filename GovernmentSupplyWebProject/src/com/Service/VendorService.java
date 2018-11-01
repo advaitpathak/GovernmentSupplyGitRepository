@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import com.al.dao.VendorDaoImpl;
 import com.al.dao.VendorExistsException;
 import com.al.model.Quotation;
 import com.al.model.Vendor;
@@ -101,5 +102,12 @@ public class VendorService implements VendorServiceInterface {
 	public List<Vendor> bestVendorFirst(List<Vendor> allVendorList) {
 		allVendorList.sort(new VendorCompareOnRating());
 		return allVendorList;
+	}
+
+	@Override
+	public void updateVendorRating(int vendorRating, Vendor vendor) {
+		vendorDao.updateVendorRating(vendorRating, vendor);;
+		
+		
 	}
 }
