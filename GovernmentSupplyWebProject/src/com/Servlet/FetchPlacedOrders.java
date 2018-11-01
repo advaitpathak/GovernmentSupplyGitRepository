@@ -40,7 +40,7 @@ public class FetchPlacedOrders extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		if(request.getSession(false)==null)
 		{	
 			request.getSession().invalidate();
@@ -49,6 +49,7 @@ public class FetchPlacedOrders extends HttpServlet {
 		}
 		else
 		{
+			
 			HttpSession session = request.getSession();
 			OrderService orderService = new OrderService();
 			List<Order> allOrdersList = orderService.getAllOrders();			

@@ -12,9 +12,7 @@
 </head>
 <body>
 <%
-session=request.getSession(true);
-
-Object listobj=request.getAttribute("AllProductList");
+Object listobj=session.getAttribute("allProductList");
 List <Product> allProductList=(List <Product>)listobj;
 %>
 
@@ -29,7 +27,7 @@ List <Product> allProductList=(List <Product>)listobj;
 <tr>
 			
             <th>ProductId</th>
-            <th>Productname</th>
+            <th>ProductName</th>
             <th>SectionName</th>
             <th>DepartmentName</th>
             <th>ProductDetails</th>
@@ -52,11 +50,16 @@ for(Product product:allProductList)
     </table>
     <input type="submit" value="Give orders"/>
 </form>
+
+
 <%	Object object = session.getAttribute("clientOrderList");
-	List<Order> clientOrderList = (List<Order>) object;%>
+	List<Order> clientOrderList = (List<Order>) object;
+%>
+
 <form method="post" action="AcceptedQuotations">   
 View Accepted Quotations <select name="OrderId">
-  <% for(Order order : clientOrderList) {%>
+  
+<% for(Order order : clientOrderList) {%>
   <option value= "<%=order.getOrderId()%>"><%=order.getOrderId()%></option>
 <% }%>
 </select>
@@ -64,5 +67,10 @@ View Accepted Quotations <select name="OrderId">
 <input type = "submit" value ="Check"/>
 </form>
 </center>
+<br>
+<br>
+<form method='post' action='Logout'><br><input type='submit' value='Logout'/>
+</form>
+
 </body>
 </html>

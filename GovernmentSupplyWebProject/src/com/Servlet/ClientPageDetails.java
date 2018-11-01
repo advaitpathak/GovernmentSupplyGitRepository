@@ -40,19 +40,20 @@ public class ClientPageDetails extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession(false);
+		//If session has expired redirect the user to login page
 		if(session==null)
 		{
-			 RequestDispatcher requestDispatcher=request.getRequestDispatcher("Login.jsp");
+			 RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
 			 requestDispatcher.include(request, response);
 		}
 		else
 		{
+			//Get list of all products and set it as request attribute
 			ProductService productService= new ProductService();
 			List<Product> allProductList = productService.getAllProduct();
+			session.setAttribute("allProductList", allProductList);
 			
-		
-		request.setAttribute("AllProductList", allProductList);
-			
+			//Get list of all orders placed by that particular client and add that list as session attribute
 			List<Order> clientOrderList = new ArrayList<>();
 			OrderService orderService = new OrderService();
 			List<Order> allOrdersList = orderService.getAllOrders();
@@ -67,7 +68,8 @@ public class ClientPageDetails extends HttpServlet {
 			}
 		
 			session.setAttribute("clientOrderList", clientOrderList);
-		
+			
+			//Redirect the user to GovernmentEmployeePortal.jsp page
 			RequestDispatcher requestDispatcher=request.getRequestDispatcher("GovernmentEmployeePortal.jsp");
 			requestDispatcher.include(request, response);
 			

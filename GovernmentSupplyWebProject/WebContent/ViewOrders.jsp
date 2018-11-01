@@ -12,7 +12,7 @@
 
 <%
 
-Object listobj=request.getAttribute("allOrders");
+Object listobj=session.getAttribute("allOrders");
 
 List <Order> allOrderList=(List <Order>)listobj;
 %>
@@ -27,7 +27,7 @@ List <Order> allOrderList=(List <Order>)listobj;
 <tr>
 			
             <th>OrderId</th>
-            <th>Productname</th>
+            <th>ProductName</th>
             <th>ProductDetails</th>
             <th>QuantityRequired</th>
             <th>OrderPlacedDate</th>
@@ -51,7 +51,10 @@ for(Order order:allOrderList)
             </tr>
         <% } %>
     </table>
-
+<br>
+<br>
+<form method='post' action='GovernmentEmployeePortal.jsp'><br><input type='submit' value='Back'/>
+</form>
 
 
 

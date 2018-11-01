@@ -11,20 +11,20 @@
 <body>
 
 <%
-Object listobj=request.getAttribute("selectedProductsList");
+Object listobj=session.getAttribute("selectedProductsList");
 
 List <Product> selectedProductsList=(List <Product>)listobj;
 session.setAttribute("Count", selectedProductsList.size());
 %>
 
 
-<form method="get" action="PlaceOrder">
+<form method="post" action="PlaceOrder">
     <table border="2">
 
 <tr>
 			
             <th>ProductId</th>
-            <th>Productname</th>
+            <th>ProductName</th>
             <th>ProductDetails</th>
             <th>QuantityRequired</th>
             <th>OrderPlacedDate</th>

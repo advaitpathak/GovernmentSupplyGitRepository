@@ -10,8 +10,6 @@
 </head>
 <body>
 <%
-session=request.getSession(true);
-
 Object listobj=session.getAttribute("allAcceptedQuotesList");
 List <AcceptedQuotes> allAcceptedQuotes=(List <AcceptedQuotes>)listobj;
 System.out.println(listobj);
@@ -49,7 +47,7 @@ for(AcceptedQuotes acceptedQuotes:allAcceptedQuotes)
     
 <br>
 <br>
-<form method='post' action='VendorPortal.jsp'><br><input type='submit' value='Back'/>
+<form method='post' action='GovernmentEmployeePortal.jsp'><br><input type='submit' value='Back'/>
 </form>
     
 </body>
