@@ -12,22 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.Service.ProductService;
-import com.al.dao.ProductDaoImpl;
+import com.Service.VendorService;
 import com.al.dao.ProductExistException;
 import com.al.dao.SectionDaoImpl;
+import com.al.dao.VendorExistsException;
 import com.al.model.Product;
+import com.al.model.Vendor;
 
 /**
- * Servlet implementation class DeleteClient
+ * Servlet implementation class AddVendor
  */
-@WebServlet("/DeleteProduct")
-public class DeleteProduct extends HttpServlet {
+@WebServlet("/AddVendor")
+public class AddVendor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteProduct() {
+    public AddVendor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,15 +48,28 @@ public class DeleteProduct extends HttpServlet {
 		}
 		else
 		{
-			ProductService productService = new ProductService();
 			HttpSession session = request.getSession();
-			String productIdStr = request.getParameter("deleteProductId");
-			Integer productId = Integer.parseInt(productIdStr);
-			productService.deleteProduct(new ProductDaoImpl().getProduct(productId));
-			List<Product> allProductList = productService.getAllProduct();
-			session.setAttribute("allProductList", allProductList);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
-			requestDispatcher.forward(request, response);
+			String vendorIdStr = request.getParameter("vendorId");
+			Integer vendorId = Integer.parseInt(vendorIdStr);
+			String vendorNameStr = request.getParameter("vendorName");
+			String vendorRatingStr = request.getParameter("vendorRating");
+			Integer vendorRating = Integer.parseInt(vendorRatingStr);
+			String establishedDateStr = request.getParameter("establishedDate");
+			String vendorPasswordStr = request.getParameter("vendorPassword");
+		
+		VendorService vendorService = new VendorService();
+		try 
+		{
+			vendorService.addVendor(new Vendor(vendorId, vendorNameStr, vendorRating, establishedDateStr, vendorPasswordStr));
+		} 
+		catch (VendorExistsException e) 
+		{
+			e.printStackTrace();
+		}
+		List<Vendor> allVendorsList = vendorService.getAllVendors();
+		session.setAttribute("allVendorList", allVendorsList);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableVendors.jsp");
+		requestDispatcher.forward(request, response);
 		}
 
 	}

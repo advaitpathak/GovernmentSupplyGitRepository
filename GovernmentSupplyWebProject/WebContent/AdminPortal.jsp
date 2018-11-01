@@ -38,6 +38,7 @@
 <center>
 <input type="text" name = "clientId" value="Id"/>
 <input type="text" name = "clientName" value="Name"/>
+<input type="text" name = "clientEmail" value="Email"/>
 <input type="text" name = "clientPassword" value="Password"/>
 <input type="text" name = "clientContactNo" value="Contact No"/>
 <br>
@@ -50,7 +51,7 @@
 <br>
 <form method='post' action='DeleteClient'>
 <center>
-<input type="text" name = "clientId" value="Id"/>
+<input type="text" name = "deleteClientId" value="Id"/>
 <input type='submit' value='Delete Client'/>
 </center>
 </form>
@@ -74,7 +75,7 @@
 <br>
 <form method='post' action='DeleteVendor'>
 <center>
-<input type="text" name = "vendorId" value="Id"/>
+<input type="text" name = "deleteVendorId" value="Id"/>
 <input type='submit' value='Delete Client'/>
 </center>
 </form>

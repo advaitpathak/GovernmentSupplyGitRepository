@@ -11,23 +11,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.Service.ProductService;
-import com.al.dao.ProductDaoImpl;
-import com.al.dao.ProductExistException;
-import com.al.dao.SectionDaoImpl;
-import com.al.model.Product;
+import com.Service.ClientService;
+import com.Service.VendorService;
+import com.al.dao.ClientDaoImpl;
+import com.al.dao.VendorDaoImpl;
+import com.al.model.Client;
+import com.al.model.Vendor;
 
 /**
- * Servlet implementation class DeleteClient
+ * Servlet implementation class DeleteVendor
  */
-@WebServlet("/DeleteProduct")
-public class DeleteProduct extends HttpServlet {
+@WebServlet("/DeleteVendor")
+public class DeleteVendor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteProduct() {
+    public DeleteVendor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,14 +47,14 @@ public class DeleteProduct extends HttpServlet {
 		}
 		else
 		{
-			ProductService productService = new ProductService();
+			VendorService vendorService = new VendorService();
 			HttpSession session = request.getSession();
-			String productIdStr = request.getParameter("deleteProductId");
-			Integer productId = Integer.parseInt(productIdStr);
-			productService.deleteProduct(new ProductDaoImpl().getProduct(productId));
-			List<Product> allProductList = productService.getAllProduct();
-			session.setAttribute("allProductList", allProductList);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
+			String vendorIdStr = request.getParameter("deleteVendorId");
+			Integer vendorId = Integer.parseInt(vendorIdStr);
+			vendorService.deleteVendor(new VendorDaoImpl().getVendor(vendorId));
+			List<Vendor> allVendorsList = vendorService.getAllVendors();
+			session.setAttribute("allVendorList", allVendorsList);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableVendors.jsp");
 			requestDispatcher.forward(request, response);
 		}
 
