@@ -49,12 +49,23 @@ public class UpdateVendorRanking extends HttpServlet {
 			Integer vendorIdToUpdate = Integer.parseInt(vendorIdToUpdateStr);
 			String updatedVendorRatingStr = request.getParameter("updatedVendorRating");
 			Integer updatedVendorRating = Integer.parseInt(updatedVendorRatingStr);
+			if (updatedVendorRating>5)
+			{
+				String exceptionName = "Vendor Rating can not be more than 5";
+				request.setAttribute( "exceptionName",exceptionName);
+				String OriginPage = "AdminPortal.jsp";
+				request.setAttribute("OriginPage", OriginPage);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			else{
 			VendorService vendorService = new VendorService();
 			vendorService.updateVendorRating(updatedVendorRating, vendorService.getVendor(vendorIdToUpdate));
 			List<Vendor> allVendorsList = vendorService.getAllVendors();
 			session.setAttribute("allVendorList", allVendorsList);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableVendors.jsp");
 			requestDispatcher.forward(request, response);
+			}
 		}
 	}
 

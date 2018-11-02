@@ -72,7 +72,7 @@ public class QuotationConfirmation extends HttpServlet {
 			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			sdf.setLenient(false);
 			estimatedDeliveryDateParse = sdf.parse(estimatedDeliveryDate);//Just for exception handling
-		   System.out.println(estimatedDeliveryDateParse);
+		   
 						
 			QuotationService quotationService = new QuotationService();
 			
@@ -93,7 +93,6 @@ public class QuotationConfirmation extends HttpServlet {
 			{
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/SetQuotation.jsp");
 				requestDispatcher.forward(request, response);
-				System.out.println("Date entered is after deadline");
 			}
 			} catch (NumberFormatException |ParseException e) {
 				// TODO Auto-generated catch block
