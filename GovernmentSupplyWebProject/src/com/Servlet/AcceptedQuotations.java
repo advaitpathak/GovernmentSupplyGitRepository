@@ -1,6 +1,7 @@
 package com.Servlet;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -38,9 +39,9 @@ public class AcceptedQuotations extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		try {
-		HttpSession session = request.getSession(false);
+		
+	try {
+			HttpSession session = request.getSession(false);
 		
 		if(session==null)
 		{
@@ -58,6 +59,7 @@ public class AcceptedQuotations extends HttpServlet {
 			
 			//Get the list of all the quotes accepted
 			List<AcceptedQuotes> allAcceptedQuotesList = acceptedQuotesService.getAllAcceptedQuotes();
+		
 			for(AcceptedQuotes acceptedQuotes : allAcceptedQuotesList)
 			{
 				//Get the accepted quotes of entered orderId
@@ -80,13 +82,13 @@ public class AcceptedQuotations extends HttpServlet {
 		}
 		} catch (IndexOutOfBoundsException e) {
 			// TODO Auto-generated catch block
-			System.out.println("no quotes are received for this order");
+			logger.info("no quotes are received for this order");
 			String exceptionName = "No quotes are received for this order";
 			request.setAttribute( "exceptionName",exceptionName);
 			String OriginPage = "GovernmentEmployeePortal.jsp";
 			request.setAttribute("OriginPage", OriginPage);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
-			requestDispatcher.include(request, response);
+			requestDispatcher.forward(request, response);
 		}
 	}
 

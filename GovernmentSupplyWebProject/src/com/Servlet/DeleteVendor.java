@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.Service.ClientService;
 import com.Service.VendorService;
 import com.al.dao.ClientDaoImpl;
@@ -24,6 +26,8 @@ import com.al.model.Vendor;
 @WebServlet("/DeleteVendor")
 public class DeleteVendor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger=Logger.getLogger(LoginChecker.class);
+    
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,7 +42,7 @@ public class DeleteVendor extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		if(request.getSession(false)==null)
 		{	
 			request.getSession().invalidate();
@@ -59,7 +63,7 @@ public class DeleteVendor extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			} catch (NumberFormatException | NullPointerException e) {
 				// TODO Auto-generated catch block
-				System.out.println("Failed to delete Vendor. Invalid VendorId");
+				logger.info("Failed to delete Vendor. Invalid VendorId");
 				String exceptionName = "Failed to delete Vendor. Invalid VendorId";
 				request.setAttribute( "exceptionName",exceptionName);
 				String OriginPage = "AdminPortal.jsp";

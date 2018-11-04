@@ -9,7 +9,11 @@ import com.al.dao.VendorDaoImpl;
 import com.al.model.Client;
 import com.al.model.Product;
 import com.al.model.Vendor;
-
+/**
+ * Interface @AdminServiceInterface
+ * @author Administrator
+ *
+ */
 public interface AdminServiceInterface
 {
 	ClientDao clientDao = new ClientDaoImpl();

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.Service.AcceptedQuotesService;
 import com.Service.OrderService;
 import com.Service.QuotationService;
@@ -26,6 +28,8 @@ import com.al.model.Quotation;
 @WebServlet("/FetchPlacedOrders")
 public class FetchPlacedOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger=Logger.getLogger(LoginChecker.class);
+    
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -60,7 +64,7 @@ public class FetchPlacedOrders extends HttpServlet {
 			} 
 			catch (NumberFormatException | NullPointerException e) {
 				//
-				System.out.println("Invalid entry");
+				logger.info("Invalid entry");
 				
 			}
 		}

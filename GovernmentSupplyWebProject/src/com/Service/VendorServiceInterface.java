@@ -6,7 +6,11 @@ import com.al.dao.VendorDao;
 import com.al.dao.VendorDaoImpl;
 import com.al.dao.VendorExistsException;
 import com.al.model.Vendor;
-
+/**
+ * 
+ * @author Administrator
+ *Interface @VendorServiceInterface
+ */
 public interface VendorServiceInterface {
 
 	VendorDao vendorDao=new VendorDaoImpl();

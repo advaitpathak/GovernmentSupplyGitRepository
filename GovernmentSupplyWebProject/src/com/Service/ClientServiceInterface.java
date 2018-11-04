@@ -6,7 +6,12 @@ import com.al.dao.ClientDao;
 import com.al.dao.ClientDaoImpl;
 import com.al.dao.ClientExistException;
 import com.al.model.Client;
-
+/**
+ * 
+ * @author Administrator
+ * @Interface ClientServiceInterface
+ *
+ */
 public interface ClientServiceInterface {
 	
 	ClientDao clientDao=new ClientDaoImpl();

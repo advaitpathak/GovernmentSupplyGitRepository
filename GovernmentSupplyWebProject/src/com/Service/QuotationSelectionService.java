@@ -11,9 +11,20 @@ import com.al.dao.VendorDaoImpl;
 import com.al.model.Order;
 import com.al.model.Quotation;
 import com.al.model.Vendor;
-
+/**
+ * 
+ * @author Administrator
+ *Class @QuotationSelectionService provides service layer functions for implementing rules for selecting quote for particular order 
+ */
 public class QuotationSelectionService
 {
+	/**
+	 * Method @quotationSelection(int orderId)
+	 * This method accepts orderId from user fetches all the quotes received for that Order
+	 * All the fetched quotes are sent to various rules function to decide which vendor will be decided how much portion of order 
+	 * If multiple rules functions returns same vendor then order quantity of those rule functions will be added and then assigned to respective Vendor
+	 * @param orderId
+	 */
 	public void quotationSelection(int orderId)
 	{	
 		System.out.println("orderID in service= "+orderId);
@@ -43,8 +54,6 @@ public class QuotationSelectionService
 		if(order50_vendorId==order30_vendorId && order50_vendorId==order20_vendorId)
 			{
 				//assign 100 order quantity to that vendor
-//				int quoteCost = MatchingQuotationList.get(order50_vendorId).getQuoteCost();
-//				quoteCost=MatchingQuotationList.get
 			for(Quotation q:MatchingQuotationList)
 			{
 				if(order50_vendorId == q.getVendor().getVendorId())
@@ -58,7 +67,6 @@ public class QuotationSelectionService
 		else if(order50_vendorId==order30_vendorId)
 			{
 				//assign 80 % order quantity to that vendor
-//				int quoteCost = MatchingQuotationList.get(order50_vendorId).getQuoteCost();
 			for(Quotation q:MatchingQuotationList)
 			{
 				if(order50_vendorId == q.getVendor().getVendorId())
@@ -69,7 +77,6 @@ public class QuotationSelectionService
 			}
 				
 				//assign 20% order quantity to order20_vendor
-//				quoteCost = MatchingQuotationList.get(order20_vendorId).getQuoteCost();
 				for(Quotation q:MatchingQuotationList)
 				{
 					if(order20_vendorId == q.getVendor().getVendorId())
@@ -83,7 +90,6 @@ public class QuotationSelectionService
 		else if(order50_vendorId==order20_vendorId)
 			{
 				//assign 70% order quantity to that vendor
-//				int quoteCost = MatchingQuotationList.get(order50_vendorId).getQuoteCost();
 			for(Quotation q:MatchingQuotationList)
 			{
 				if(order50_vendorId == q.getVendor().getVendorId())
@@ -94,7 +100,6 @@ public class QuotationSelectionService
 			}
 				
 				//assign 30% order Quantity to order30_vendor
-//				quoteCost = MatchingQuotationList.get(order30_vendorId).getQuoteCost();
 				for(Quotation q:MatchingQuotationList)
 				{
 					if(order30_vendorId == q.getVendor().getVendorId())
@@ -109,7 +114,6 @@ public class QuotationSelectionService
 			{
 			System.out.println("I am in right if");
 				//assign 50% order to that vendor
-//				int quoteCost = MatchingQuotationList.get(order30_vendorId).getQuoteCost();
 			for(Quotation q:MatchingQuotationList)
 			{
 				if(order30_vendorId == q.getVendor().getVendorId())
@@ -121,7 +125,6 @@ public class QuotationSelectionService
 			}
 				
 				//assign 50% order to order50_vendor
-//				quoteCost = MatchingQuotationList.get(order50_vendorId).getQuoteCost();
 				for(Quotation q:MatchingQuotationList)
 				{
 					if(order50_vendorId == q.getVendor().getVendorId())
@@ -135,7 +138,6 @@ public class QuotationSelectionService
 		else
 			{
 				//assign 50% order quantity to order50_vendor
-//				int quoteCost = MatchingQuotationList.get(order50_vendorId).getQuoteCost();
 			for(Quotation q:allQuotation)
 			{
 				if(order50_vendorId == q.getVendor().getVendorId())
@@ -146,7 +148,6 @@ public class QuotationSelectionService
 			}
 				
 				//assign 30% order Quantity to order30_vendor
-//				quoteCost = MatchingQuotationList.get(order30_vendorId).getQuoteCost();
 				for(Quotation q:MatchingQuotationList)
 				{
 					if(order30_vendorId == q.getVendor().getVendorId())
@@ -157,7 +158,6 @@ public class QuotationSelectionService
 				}
 				
 				//assign 20% order quantity to order20_vendor
-//				quoteCost = MatchingQuotationList.get(order20_vendorId).getQuoteCost();
 				for(Quotation q:MatchingQuotationList)
 				{
 					if(order20_vendorId == q.getVendor().getVendorId())

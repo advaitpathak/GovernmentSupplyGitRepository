@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.Service.ClientService;
 import com.Service.ProductService;
 import com.al.dao.ClientDaoImpl;
@@ -24,7 +26,8 @@ import com.al.model.Product;
 @WebServlet("/DeleteClient")
 public class DeleteClient extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger logger=Logger.getLogger(LoginChecker.class);
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -38,7 +41,7 @@ public class DeleteClient extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		if(request.getSession(false)==null)
 		{	
 			request.getSession().invalidate();
@@ -59,7 +62,7 @@ public class DeleteClient extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			} catch (NumberFormatException | NullPointerException e) {
 				// TODO Auto-generated catch block
-				System.out.println("Failed to delete Client. Invalid ClientId");
+				logger.info("Failed to delete Client. Invalid ClientId");
 				String exceptionName = "Failed to delete Client. Invalid ClientId";
 				request.setAttribute( "exceptionName",exceptionName);
 				String OriginPage = "AdminPortal.jsp";

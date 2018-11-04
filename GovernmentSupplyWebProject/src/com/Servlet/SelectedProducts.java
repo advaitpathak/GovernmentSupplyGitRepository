@@ -62,7 +62,7 @@ public class SelectedProducts extends HttpServlet {
 	}
 	catch(NumberFormatException | NullPointerException e)
 	{
-		System.out.println("Please select at least one order");
+		logger.info("Please select at least one order");
 		//should go back to GovernmentEmployeePortal.jsp
 		String exceptionName = "Please select at least one order";
 		request.setAttribute( "exceptionName",exceptionName);

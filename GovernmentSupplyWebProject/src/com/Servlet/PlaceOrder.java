@@ -44,7 +44,7 @@ public class PlaceOrder extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		 try {
 		HttpSession session=request.getSession(false);
 		
@@ -63,7 +63,7 @@ public class PlaceOrder extends HttpServlet {
 		
 		//Accept the quantity ,Order Placed date and Deadline from the user using parameters
 		String parameter = request.getParameter("quantity1");
-		System.out.println("quantity1"+ parameter);
+		logger.info("quantity1"+ parameter);
 		for(int i=1;i<=countInt;i++)
 		{
 			
@@ -83,11 +83,10 @@ public class PlaceOrder extends HttpServlet {
 			Date orderPlacedDateParse;
 			Date deadLineDateParse;
 			try {
-				System.out.println("try entered");
+				
 			orderPlacedDateParse = sdf.parse(orderPlacedDate);//just for exception handling
 			deadLineDateParse = sdf.parse(deadLine);
-				System.out.println(quantityRequired+orderPlacedDate+deadLine);
-			
+							
 			logger.info(quantityRequired+orderPlacedDate+deadLine);
 			 
 			//Get the last orderId from database and set the new orderId as plus one of last order entry
@@ -101,7 +100,7 @@ public class PlaceOrder extends HttpServlet {
 			} catch (ParseException e) 
 			{
 				// TODO Auto-generated catch block
-				System.out.println("Order con nont be placed  invalid date");
+				logger.info("Order con nont be placed  invalid date");
 				String exceptionName = "Order can not be placed due to invalid entries";
 				request.setAttribute( "exceptionName",exceptionName);
 				String OriginPage = "PlaceOrder.jsp";
@@ -124,8 +123,7 @@ public class PlaceOrder extends HttpServlet {
 		requestDispatcher.include(request, response);
 		 } catch (NumberFormatException | IllegalStateException e) {
 				// TODO Auto-generated catch block
-				System.out.println("Order could'nt be placed  please enter valid entries");
-				System.out.println("Order con nont be placed  invalid date");
+				logger.info("Order could'nt be placed  please enter valid entries");
 				String exceptionName = "Order can not be placed due to invalid entries";
 				request.setAttribute( "exceptionName",exceptionName);
 				String OriginPage = "PlaceOrder.jsp";

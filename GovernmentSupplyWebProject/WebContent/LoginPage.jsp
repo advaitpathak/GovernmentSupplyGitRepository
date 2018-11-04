@@ -12,7 +12,7 @@
 <hr>
 <h3> Login Page</h3>
 <form method="post" action="LoginChecker">
-Login id:<input type="text" name="loginId" required/><br>
+Login id:<input type="text" name="loginId" required/><br><br>
 Password : <input type="password" name="password" required/> <br><br>
 User Type: <select name="type">
   <option value="Government Employee">Government Employee</option>

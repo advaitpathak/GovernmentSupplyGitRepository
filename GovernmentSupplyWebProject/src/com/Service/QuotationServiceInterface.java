@@ -1,12 +1,16 @@
 package com.Service;
 
 import java.util.List;
-
 import com.al.dao.QuotationDao;
 import com.al.dao.QuotationDaoImpl;
 import com.al.dao.QuotationExistException;
 import com.al.model.Quotation;
 
+/**
+ * 
+ * @author Dhanesh
+ *Interface @QuotationServiceInterface
+ */
 public interface QuotationServiceInterface {
 
 	QuotationDao quotationDao = new QuotationDaoImpl();

@@ -6,7 +6,11 @@ import com.al.dao.AcceptedQuotesDao;
 import com.al.dao.AcceptedQuotesDaoImpl;
 import com.al.dao.QuoteExistException;
 import com.al.model.AcceptedQuotes;
-
+/**
+ * 
+ * @author Administrator
+ *Interface @AcceptedQuotesServiceInterface 
+ */
 public interface AcceptedQuotesServiceInterface 
 {
 	AcceptedQuotesDao acceptedQuotesDao = new AcceptedQuotesDaoImpl();

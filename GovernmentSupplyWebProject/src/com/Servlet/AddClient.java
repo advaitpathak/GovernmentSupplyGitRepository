@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.Service.ClientService;
 import com.Service.ProductService;
 import com.al.dao.ClientDaoImpl;
@@ -26,7 +28,7 @@ import com.al.model.Product;
 @WebServlet("/AddClient")
 public class AddClient extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger logger = Logger.getRootLogger();       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,7 +42,7 @@ public class AddClient extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 		if(request.getSession(false)==null)
 		{	
 			request.getSession().invalidate();
@@ -67,8 +69,8 @@ public class AddClient extends HttpServlet {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableClients.jsp");
 				requestDispatcher.include(request, response);
 			} catch (NumberFormatException | NullPointerException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Failed to add Client. Please enter valid data");
+				
+				logger.info("Failed to add Client. Please enter valid data");
 				String exceptionName = "Failed to add Client. Please enter valid data";
 				request.setAttribute( "exceptionName",exceptionName);
 				String OriginPage = "AdminPortal.jsp";
@@ -76,9 +78,9 @@ public class AddClient extends HttpServlet {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ExceptionPage.jsp");
 				requestDispatcher.include(request, response);
 			} catch (ClientExistException e) {
-	// TODO Auto-generated catch block			
-	e.printStackTrace();
-}
+			
+				e.printStackTrace();
+			}
 		}
 
 	}

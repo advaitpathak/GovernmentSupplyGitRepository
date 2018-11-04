@@ -6,12 +6,33 @@ import java.util.Random;
 
 import com.al.model.Quotation;
 import com.al.model.Vendor;
-
+/**
+ * 
+ * @author Administrator
+ *class @QuotationRules
+ *provides all the rules to decide which Quote should be selected
+ */
 public class QuotationRules {
 	QuotationService quotationService = new QuotationService();
 	VendorService vendorService = new VendorService();
 	
-	
+	/**
+	 * Method @rule1_50(List<Quotation> quotationList)
+	 * this method is use to select the vendor to whom 50% of order quantity will be assigned
+	 * Priority to select the vendor is as follows
+	 * 1.Vendor with Lowest Quote cost
+	 * if 1st rule gives more than 1 vendor then
+	 * 2.Vendor with Highest ratings
+	 * if 2nd rule gives more than 1 vendor then
+	 * 3.Vendor with Earliest delivery date
+	 * if 3rd rule gives more than 1 vendor then
+	 * 4.Vendor with oldest established date
+	 * if 4th rule gives more than 1 vendor then
+	 * 5.If clash occurs with all above rules then Vendor will be selected randomly
+	 
+	 * @param quotationList
+	 * @return VendorId to whom 50% order quantity will be assigned
+	 */
 	public int rule1_50(List<Quotation> quotationList)
 	{	
 		List<Quotation> rule1List1 = new ArrayList<Quotation>();
@@ -117,7 +138,20 @@ public class QuotationRules {
 		}
 	}
 	
-	
+	/**
+	 * Method @rule2_30(List<Quotation> quotationList)
+	 * this method is use to select the vendor to whom 30% of order quantity will be assigned
+	 * Priority to select the vendor is as follows
+	 * 1.Vendor with Highest ratings
+	 * if 1st rule gives more than 1 vendor then
+	 * 2.Vendor with Earliest delivery date
+	 * if 2nd rule gives more than 1 vendor then
+	 * 3.Vendor with oldest established date
+	 * if 3rd rule gives more than 1 vendor then
+	 * 4.If clash occurs with all above rules then Vendor will be selected randomly
+	 * @param quotationList
+	 * @return VendorId to whom 30% order quantity will be assigned
+	 */
 	public int rule2_30(List<Quotation> quotationList)
 	{
 		List<Quotation> rule1List1 = new ArrayList<Quotation>();
@@ -205,6 +239,18 @@ public class QuotationRules {
 			}
 		
 }
+	/**
+	 * Method @rule3_20(List<Quotation> quotationList)
+	 * this method is use to select the vendor to whom 20% of order quantity will be assigned
+	 * Priority to select the vendor is as follows
+	 * 1.Vendor with Earliest delivery date
+	 * if 1st rule gives more than 1 vendor then
+	 * 2.Vendor with oldest established date
+	 * if 2nd rule gives more than 1 vendor then
+	 * 3.If clash occurs with all above rules then Vendor will be selected randomly
+	 * @param quotationList
+	 * @return VendorId to whom 20% order quantity will be assigned
+	 */
 	public int rule3_20(List<Quotation> quotationList)
 	{
 		List<Quotation> quotationWithSameVendorRating = new ArrayList<Quotation>();

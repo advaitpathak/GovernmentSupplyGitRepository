@@ -6,7 +6,11 @@ import com.al.dao.ProductDao;
 import com.al.dao.ProductDaoImpl;
 import com.al.dao.ProductExistException;
 import com.al.model.Product;
-
+/**
+ * 
+ * @author Administrator
+ *Interface @ProductServiceInterface
+ */
 public interface ProductServiceInterface {
 
 	ProductDao productdao=new ProductDaoImpl();

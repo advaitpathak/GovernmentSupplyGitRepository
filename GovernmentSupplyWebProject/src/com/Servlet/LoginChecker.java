@@ -86,13 +86,14 @@ public class LoginChecker extends HttpServlet {
 						RequestDispatcher requestDispatcher=request.getRequestDispatcher("ClientPageDetails");
 						requestDispatcher.forward(request, response);
 					}
+					else  //send it to loginPage.jsp
+					{ 
+						RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
+						response.getWriter().append("Wrong user id OR password Or User Type");
+						requestDispatcher.include(request, response);
+					}
 				}
-				else  //send it to loginPage.jsp
-				{ 
-					RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
-					response.getWriter().append("Wrong user id OR password Or User Type");
-					requestDispatcher.include(request, response);
-				}
+				
 			 }
 		//Login check for vendor
 			 else if(type.equalsIgnoreCase("vendor"))
@@ -118,13 +119,14 @@ public class LoginChecker extends HttpServlet {
 						 RequestDispatcher requestDispatcher=request.getRequestDispatcher("FetchPlacedOrders");
 						 requestDispatcher.forward(request, response);
 					 }
+					 else
+					 {
+						  RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
+				    	  response.getWriter().append("Wrong user id OR password");
+				    	  requestDispatcher.include(request, response);
+					 }
 				 }
-				 else
-				 {
-					  RequestDispatcher requestDispatcher=request.getRequestDispatcher("LoginPage.jsp");
-			    	  response.getWriter().append("Wrong user id OR password");
-			    	  requestDispatcher.include(request, response);
-				 }
+				 
 			 }
 				//Login check for admin
 				 else if(type.equalsIgnoreCase("admin"))

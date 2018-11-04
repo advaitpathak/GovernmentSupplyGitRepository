@@ -34,7 +34,7 @@ public class UpdateVendorRanking extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		if(request.getSession(false)==null)
 		{	
 			request.getSession().invalidate();
@@ -43,7 +43,6 @@ public class UpdateVendorRanking extends HttpServlet {
 		}
 		else
 		{
-			System.out.println("IN");
 			HttpSession session = request.getSession();
 			String vendorIdToUpdateStr = request.getParameter("vendorIdToUpdate");
 			Integer vendorIdToUpdate = Integer.parseInt(vendorIdToUpdateStr);

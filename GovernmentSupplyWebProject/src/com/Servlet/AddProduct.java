@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.Service.ProductService;
 import com.al.dao.ProductExistException;
 import com.al.dao.SectionDaoImpl;
 import com.al.model.Product;
+
 
 /**
  * Servlet implementation class AddProduct
@@ -22,7 +25,8 @@ import com.al.model.Product;
 @WebServlet("/AddProduct")
 public class AddProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger logger = Logger.getRootLogger();
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,8 +39,8 @@ public class AddProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	
+	
 		if(request.getSession(false)==null)
 		{	
 			request.getSession().invalidate();
@@ -70,8 +74,8 @@ public class AddProduct extends HttpServlet {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AllAvailableProducts.jsp");
 				requestDispatcher.forward(request, response);
 			} catch (NumberFormatException | NullPointerException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Failed to add Product. Please enter valid data");
+	
+				logger.info("Failed to add Product. Please enter valid data");
 				String exceptionName = "Failed to add Product. Please enter valid data";
 				request.setAttribute( "exceptionName",exceptionName);
 				String OriginPage = "AdminPortal.jsp";

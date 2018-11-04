@@ -41,7 +41,8 @@ public class VendorQuotation extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+	
 		if(request.getSession(false)==null)
 		{	
 			request.getSession().invalidate();
@@ -88,9 +89,9 @@ public class VendorQuotation extends HttpServlet {
 			}
 			else
 			{
+				response.getWriter().append("Not eligiblie: Establishment criteria not fulfilled");
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/VendorPortal.jsp");
-				requestDispatcher.forward(request, response);
-				//System.out.println("Not eligible");
+				requestDispatcher.include(request, response);
 			}			
 		}
 	}
